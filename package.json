@@ -1,0 +1,1 @@
+{"name":"service-center","private":true,"packageManager":"pnpm@9.0.6","scripts":{"lint":"eslint . --ext .ts,.tsx","type-check":"tsc --noEmit"},"devDependencies":{"eslint":"^9.35.0","prettier":"^3.6.2","typescript":"^5.9.2"},"dependencies":{"pnpm":"^10.16.1"}}
