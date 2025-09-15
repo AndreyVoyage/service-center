@@ -1,1 +1,21 @@
-{ "name": "@sc/config", "version": "0.0.0", "main": "./eslint/index.js" }
+{
+    "name": "@sc/config",
+    "version": "0.0.0",
+    "main": "./eslint/index.js",
+    "devDependencies": {
+        "@types/node": "^24.4.0",
+        "@typescript-eslint/eslint-plugin": "^8.43.0",
+        "@typescript-eslint/parser": "^8.43.0",
+        "eslint": "^9.35.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.2"
+    },
+    "scripts": {
+        "type-check": "tsc --noEmit",
+        "lint": "eslint . --fix --ext .ts,.tsx,.js,.jsx",
+        "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx"
+    }
+}
