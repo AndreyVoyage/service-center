@@ -19,6 +19,7 @@
         "typescript-eslint": "^8.43.0"
     },
     "dependencies": {
+        "@payloadcms/next": "^3.55.1",
         "pnpm": "^10.16.1"
     }
 }
