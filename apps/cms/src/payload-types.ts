@@ -73,6 +73,7 @@ export interface Config {
     services: Service;
     media: Media;
     documents: Document;
+    reviews: Review;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +86,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -127,6 +129,8 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  fullname?: string | null;
+  role: 'developer' | 'admin' | 'manager';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -182,6 +186,15 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'servicesGrid';
+          }
+        | {
+            title?: string | null;
+            filter?: ('all' | '5' | '4plus') | null;
+            limit?: number | null;
+            autoplay?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'reviewsSlider';
           }
       )[]
     | null;
@@ -285,6 +298,20 @@ export interface Document {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  name: string;
+  rating: '5' | '4' | '3' | '2' | '1';
+  text: string;
+  photo?: (number | null) | Media;
+  isPublished?: boolean | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -313,6 +340,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'documents';
         value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -361,6 +392,8 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  fullname?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -417,6 +450,16 @@ export interface PagesSelect<T extends boolean = true> {
               category?: T;
               columns?: T;
               sort?: T;
+              id?: T;
+              blockName?: T;
+            };
+        reviewsSlider?:
+          | T
+          | {
+              title?: T;
+              filter?: T;
+              limit?: T;
+              autoplay?: T;
               id?: T;
               blockName?: T;
             };
@@ -520,6 +563,19 @@ export interface DocumentsSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  name?: T;
+  rating?: T;
+  text?: T;
+  photo?: T;
+  isPublished?: T;
+  createdAt?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

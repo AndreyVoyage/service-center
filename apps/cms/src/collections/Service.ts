@@ -2,12 +2,18 @@
 import { CollectionConfig } from 'payload'
 import type { Config } from '../payload-types'
 
+import { isStaff, isAdmin, isDeveloper } from '../access/isStaff'
+
 type CollectionSlug = keyof Config['collections']
 
 export const Service: CollectionConfig = {
   slug: 'services',
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'price', 'category'] },
-  access: { read: () => true },
+  access: { 
+    read: isStaff,
+    create: isStaff,
+    update: isAdmin,
+    delete: isDeveloper },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', required: true, unique: true, localized: true },
