@@ -74,6 +74,7 @@ export interface Config {
     media: Media;
     documents: Document;
     reviews: Review;
+    'form-submissions': FormSubmission;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -87,6 +88,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -94,8 +96,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    notifications: Notification;
+  };
+  globalsSelect: {
+    notifications: NotificationsSelect<false> | NotificationsSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -312,6 +318,25 @@ export interface Review {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions".
+ */
+export interface FormSubmission {
+  id: number;
+  formType: 'repair' | 'diagnostics' | 'cooperation';
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -344,6 +369,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'reviews';
         value: number | Review;
+      } | null)
+    | ({
+        relationTo: 'form-submissions';
+        value: number | FormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -579,6 +608,16 @@ export interface ReviewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions_select".
+ */
+export interface FormSubmissionsSelect<T extends boolean = true> {
+  formType?: T;
+  data?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -608,6 +647,74 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: number;
+  channels?: {
+    email?: {
+      enabled?: boolean | null;
+      smtpHost?: string | null;
+      smtpPort?: number | null;
+      secure?: boolean | null;
+      user?: string | null;
+      pass?: string | null;
+      recipient?: string | null;
+    };
+    telegram?: {
+      enabled?: boolean | null;
+      botToken?: string | null;
+      chatId?: string | null;
+    };
+    whatsapp?: {
+      enabled?: boolean | null;
+      apiUrl?: string | null;
+      phone?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications_select".
+ */
+export interface NotificationsSelect<T extends boolean = true> {
+  channels?:
+    | T
+    | {
+        email?:
+          | T
+          | {
+              enabled?: T;
+              smtpHost?: T;
+              smtpPort?: T;
+              secure?: T;
+              user?: T;
+              pass?: T;
+              recipient?: T;
+            };
+        telegram?:
+          | T
+          | {
+              enabled?: T;
+              botToken?: T;
+              chatId?: T;
+            };
+        whatsapp?:
+          | T
+          | {
+              enabled?: T;
+              apiUrl?: T;
+              phone?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
