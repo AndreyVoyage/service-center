@@ -23,6 +23,17 @@ export const ServicesGrid: Block = {
         { label: '4', value: '4' }
       ],
       defaultValue: '3'
+    },
+    /* сортировка */
+    {
+      name: 'sort',
+      type: 'select',
+      options: [
+        { label: 'Price ↑', value: 'priceAsc' },
+        { label: 'Price ↓', value: 'priceDesc' },
+        { label: 'Title A-Z', value: 'titleAsc' }
+      ],
+      defaultValue: 'titleAsc'
     }
   ]
 }
