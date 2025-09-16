@@ -2,12 +2,14 @@
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { Page } from './collections/Page'
 import { Users } from './collections/Users';
+import { Categories } from './collections/Categories'
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET!,
   admin: { user: 'users' },
-  collections: [Users],
+  collections: [Users, Page, Categories],
   globals: [],
   editor: lexicalEditor({}),
   db: postgresAdapter({
