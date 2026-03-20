@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `main`  
-**Сгенерировано:** 20.03.2026, 23:01:51
+**Сгенерировано:** 20.03.2026, 23:27:52
 
 ## 📂 Дерево файлов
 
@@ -68,7 +68,6 @@
 │   │   │   ├── lib/
 │   │   │   │   ├── notifyManagers.ts
 │   │   │   │   └── telegram.ts
-│   │   │   ├── index.ts
 │   │   │   ├── payload-types.ts
 │   │   │   └── payload.config.ts
 │   │   ├── tests/
@@ -94,33 +93,16 @@
 │   │   ├── vitest.config.mts
 │   │   └── vitest.setup.ts
 │   └── web/
-│       ├── src/
-│       │   ├── api/
-│       │   │   └── form/
-│       │   │       └── route.ts
-│       │   ├── app/
-│       │   │   ├── layout.tsx
-│       │   │   └── page.tsx
-│       │   └── components/
-│       │       ├── Hero.tsx
-│       │       └── RepairForm.tsx
-│       ├── eslint.config.js
-│       ├── next-env.d.ts
-│       ├── next.config.mjs
-│       ├── package.json
-│       └── tsconfig.json
+│       └── package.json
 ├── packages/
 │   ├── config/
 │   │   ├── eslint/
 │   │   │   └── index.ts
 │   │   ├── prettier/
 │   │   │   └── index.json
-│   │   ├── src/
-│   │   │   └── FormSchema.ts
 │   │   ├── tsconfig/
 │   │   │   └── base.json
-│   │   ├── package.json
-│   │   └── tsconfig.json
+│   │   └── package.json
 │   └── ui/
 │       └── src/
 │           ├── index.ts
@@ -128,7 +110,9 @@
 ├── .gitignore
 ├── eslint.config.js
 ├── generate-structure.js
+├── Ordrer to Provision Gdansk 13.12.2025.xlsx
 ├── package.json
+├── photo_2025-12-18_22-11-47.jpg
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 └── tsconfig.json
@@ -173,7 +157,6 @@
 - [apps/cms/src/globals/Notifications.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/globals/Notifications.ts)
 - [apps/cms/src/lib/notifyManagers.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/lib/notifyManagers.ts)
 - [apps/cms/src/lib/telegram.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/lib/telegram.ts)
-- [apps/cms/src/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/index.ts)
 - [apps/cms/src/payload-types.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/payload-types.ts)
 - [apps/cms/src/payload.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/payload.config.ts)
 - [apps/cms/tests/e2e/frontend.e2e.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/tests/e2e/frontend.e2e.spec.ts)
@@ -181,9 +164,6 @@
 - [apps/cms/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/next-env.d.ts)
 - [apps/cms/playwright.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/playwright.config.ts)
 - [apps/cms/vitest.setup.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/vitest.setup.ts)
-- [apps/web/src/api/form/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/api/form/route.ts)
-- [apps/web/eslint.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/eslint.config.js)
-- [apps/web/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/next-env.d.ts)
 
 ### 🎨 Frontend
 
@@ -194,14 +174,6 @@
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx)
 - [apps/cms/src/app/(payload)/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/app/(payload)/layout.tsx)
 - [apps/cms/src/components/ExportCSV.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/components/ExportCSV.tsx)
-- [apps/web/src/app/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/layout.tsx)
-- [apps/web/src/app/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/page.tsx)
-- [apps/web/src/components/Hero.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Hero.tsx)
-- [apps/web/src/components/RepairForm.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/RepairForm.tsx)
-
-### 🗄️ База данных / Миграции
-
-- [packages/config/src/FormSchema.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/src/FormSchema.ts)
 
 ### 📄 Прочие файлы
 
@@ -220,12 +192,9 @@
 - [apps/cms/test.env](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/test.env)
 - [apps/cms/tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/tsconfig.json)
 - [apps/cms/vitest.config.mts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/vitest.config.mts)
-- [apps/web/next.config.mjs](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/next.config.mjs)
-- [apps/web/tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/tsconfig.json)
 - [packages/config/eslint/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/eslint/index.ts)
 - [packages/config/prettier/index.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/prettier/index.json)
 - [packages/config/tsconfig/base.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/tsconfig/base.json)
-- [packages/config/tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/tsconfig.json)
 - [packages/ui/src/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/ui/src/index.ts)
 - [.gitignore](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/.gitignore)
 - [eslint.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/eslint.config.js)
@@ -240,6 +209,8 @@
 - apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png (binary)
 - apps/cms/media/iiii.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz.jpg (binary)
+- Ordrer to Provision Gdansk 13.12.2025.xlsx (binary)
+- photo_2025-12-18_22-11-47.jpg (binary)
 
 ---
 

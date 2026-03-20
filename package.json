@@ -6,7 +6,8 @@
     "scripts": {
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
-        "type-check": "tsc --noEmit"
+        "type-check": "tsc --noEmit",
+        "structure": "node generate-structure.js"
     },
     "devDependencies": {
         "@eslint/js": "^9.35.0",
