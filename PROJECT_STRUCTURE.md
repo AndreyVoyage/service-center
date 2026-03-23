@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `main`  
-**Сгенерировано:** 23.03.2026, 19:25:39
+**Сгенерировано:** 23.03.2026, 20:35:13
 
 ## 📂 Дерево файлов
 
@@ -20,6 +20,7 @@
 │   │   │   ├── Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png
 │   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png
 │   │   │   ├── iiii.jpg
+│   │   │   ├── photo_2026-02-18_14-49-53.jpg
 │   │   │   └── zzzzzzzzzzzz.jpg
 │   │   ├── src/
 │   │   │   ├── access/
@@ -118,7 +119,8 @@
 │       │   │   ├── ServiceCard.module.css
 │       │   │   └── ServiceCard.tsx
 │       │   └── lib/
-│       │       └── api.ts
+│       │       ├── api.ts
+│       │       └── check-hero.ts
 │       ├── next-env.d.ts
 │       ├── next.config.js
 │       ├── package.json
@@ -139,6 +141,7 @@
 ├── .gitignore
 ├── eslint.config.js
 ├── generate-structure.js
+├── HERO_CACHE_FIX.md
 ├── HERO_SETUP.md
 ├── Ordrer to Provision Gdansk 13.12.2025.xlsx
 ├── package.json
@@ -161,6 +164,7 @@
 - [apps/web/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/package.json)
 - [packages/config/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/package.json)
 - [packages/ui/src/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/ui/src/package.json)
+- [HERO_CACHE_FIX.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/HERO_CACHE_FIX.md)
 - [HERO_SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/HERO_SETUP.md)
 - [package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/package.json)
 
@@ -197,6 +201,7 @@
 - [apps/cms/playwright.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/playwright.config.ts)
 - [apps/cms/vitest.setup.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/vitest.setup.ts)
 - [apps/web/src/lib/api.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/lib/api.ts)
+- [apps/web/src/lib/check-hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/lib/check-hero.ts)
 - [apps/web/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/next-env.d.ts)
 - [apps/web/next.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/next.config.js)
 
@@ -262,6 +267,7 @@
 - apps/cms/media/Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png (binary)
 - apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png (binary)
 - apps/cms/media/iiii.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-53.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz.jpg (binary)
 - Ordrer to Provision Gdansk 13.12.2025.xlsx (binary)
 - photo_2025-12-18_22-11-47.jpg (binary)
