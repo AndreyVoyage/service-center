@@ -11,12 +11,13 @@ import { Documents } from './collections/Documents'
 import { Review } from './collections/Review'
 import { FormSubmission } from './collections/FormSubmission'
 import { Notifications } from './globals/Notifications'
+import { Hero } from './globals/Hero'
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET!,
   admin: { user: 'users' },
   collections: [Users, Page, Categories, Service, Media, Documents, Review, FormSubmission],
-  globals: [Notifications],
+  globals: [Notifications, Hero],
   editor: lexicalEditor({}),
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI! }

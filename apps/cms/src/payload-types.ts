@@ -98,9 +98,11 @@ export interface Config {
   };
   globals: {
     notifications: Notification;
+    hero: Hero;
   };
   globalsSelect: {
     notifications: NotificationsSelect<false> | NotificationsSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
   };
   locale: null;
   user: User & {
@@ -680,6 +682,26 @@ export interface Notification {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: number;
+  isActive?: boolean | null;
+  title: string;
+  subtitle?: string | null;
+  backgroundType: 'image' | 'color';
+  backgroundImage?: (number | null) | Media;
+  backgroundColor?: ('blue' | 'dark' | 'white') | null;
+  ctaText?: string | null;
+  ctaLink?: string | null;
+  showSecondaryLink?: boolean | null;
+  secondaryLinkText?: string | null;
+  secondaryLinkHref?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications_select".
  */
 export interface NotificationsSelect<T extends boolean = true> {
@@ -712,6 +734,26 @@ export interface NotificationsSelect<T extends boolean = true> {
               phone?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  isActive?: T;
+  title?: T;
+  subtitle?: T;
+  backgroundType?: T;
+  backgroundImage?: T;
+  backgroundColor?: T;
+  ctaText?: T;
+  ctaLink?: T;
+  showSecondaryLink?: T;
+  secondaryLinkText?: T;
+  secondaryLinkHref?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

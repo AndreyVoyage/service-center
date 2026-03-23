@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `main`  
-**Сгенерировано:** 23.03.2026, 17:56:28
+**Сгенерировано:** 23.03.2026, 19:25:39
 
 ## 📂 Дерево файлов
 
@@ -64,6 +64,7 @@
 │   │   │   ├── components/
 │   │   │   │   └── ExportCSV.tsx
 │   │   │   ├── globals/
+│   │   │   │   ├── Hero.ts
 │   │   │   │   └── Notifications.ts
 │   │   │   ├── lib/
 │   │   │   │   ├── notifyManagers.ts
@@ -138,6 +139,7 @@
 ├── .gitignore
 ├── eslint.config.js
 ├── generate-structure.js
+├── HERO_SETUP.md
 ├── Ordrer to Provision Gdansk 13.12.2025.xlsx
 ├── package.json
 ├── photo_2025-12-18_22-11-47.jpg
@@ -159,6 +161,7 @@
 - [apps/web/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/package.json)
 - [packages/config/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/package.json)
 - [packages/ui/src/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/ui/src/package.json)
+- [HERO_SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/HERO_SETUP.md)
 - [package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/package.json)
 
 ### ⚙️ Backend / API
@@ -182,6 +185,7 @@
 - [apps/cms/src/collections/Review.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/collections/Review.ts)
 - [apps/cms/src/collections/Service.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/collections/Service.ts)
 - [apps/cms/src/collections/Users.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/collections/Users.ts)
+- [apps/cms/src/globals/Hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/globals/Hero.ts)
 - [apps/cms/src/globals/Notifications.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/globals/Notifications.ts)
 - [apps/cms/src/lib/notifyManagers.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/lib/notifyManagers.ts)
 - [apps/cms/src/lib/telegram.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/lib/telegram.ts)

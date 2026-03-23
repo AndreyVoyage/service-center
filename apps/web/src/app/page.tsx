@@ -1,6 +1,6 @@
 // apps/web/src/app/page.tsx
 import Link from 'next/link';
-import { getServices, getReviews, Service, Review } from '@/lib/api';
+import { getServices, getReviews, getHero, Service, Review, HeroData } from '@/lib/api';
 import ServiceCard from '@/components/ServiceCard';
 import ReviewSlider from '@/components/ReviewSlider';
 import RequestForm from '@/components/RequestForm';
@@ -8,10 +8,106 @@ import styles from './page.module.css';
 
 export const revalidate = 60;
 
+// Helper function to get background class based on color
+function getHeroBackgroundClass(backgroundColor?: string): string {
+  switch (backgroundColor) {
+    case 'dark':
+      return styles['hero-bg-dark'];
+    case 'white':
+      return styles['hero-bg-white'];
+    case 'blue':
+    default:
+      return styles['hero-bg-blue'];
+  }
+}
+
+// Helper function to get background image URL
+function getBackgroundImageUrl(backgroundImage: Media | string | undefined): string | null {
+  if (!backgroundImage) return null;
+  if (typeof backgroundImage === 'string') return backgroundImage;
+  return backgroundImage.url || null;
+}
+
+// Default Hero component when API fails or returns no data
+function DefaultHero() {
+  return (
+    <section className={`${styles.hero} ${styles['hero-bg-blue']}`}>
+      <div className={styles.heroContent}>
+        <h1 className={styles.heroTitle}>
+          Ремонт промышленных холодильников 24/7
+        </h1>
+        <p className={styles.heroSubtitle}>
+          Срочный выезд мастера в день обращения.
+          Ремонт любой сложности с гарантией до 12 месяцев.
+        </p>
+        <div className={styles.heroActions}>
+          <Link href="#form" className={styles.heroButton}>
+            Вызвать мастера
+          </Link>
+          <Link href="/services" className={styles.heroLink}>
+            Все услуги →
+          </Link>
+        </div>
+      </div>
+      <div className={styles.heroDecoration}></div>
+    </section>
+  );
+}
+
+// Dynamic Hero component
+function DynamicHero({ hero }: { hero: HeroData }) {
+  // If hero is inactive, don't render
+  if (!hero.isActive) {
+    return null;
+  }
+
+  const backgroundImageUrl = hero.backgroundType === 'image'
+    ? getBackgroundImageUrl(hero.backgroundImage)
+    : null;
+
+  const backgroundClass = hero.backgroundType === 'color'
+    ? getHeroBackgroundClass(hero.backgroundColor)
+    : '';
+
+  const sectionStyle = backgroundImageUrl
+    ? { backgroundImage: `url(${process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001'}${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    : undefined;
+
+  return (
+    <section
+      className={`${styles.hero} ${backgroundClass}`}
+      style={sectionStyle}
+    >
+      <div className={styles.heroContent}>
+        <h1 className={styles.heroTitle}>
+          {hero.title || 'Ремонт промышленных холодильников 24/7'}
+        </h1>
+        {hero.subtitle && (
+          <p className={styles.heroSubtitle}>
+            {hero.subtitle}
+          </p>
+        )}
+        <div className={styles.heroActions}>
+          <Link href={hero.ctaLink || '#form'} className={styles.heroButton}>
+            {hero.ctaText || 'Вызвать мастера'}
+          </Link>
+          {hero.showSecondaryLink && hero.secondaryLinkText && (
+            <Link href={hero.secondaryLinkHref || '/services'} className={styles.heroLink}>
+              {hero.secondaryLinkText}
+            </Link>
+          )}
+        </div>
+      </div>
+      <div className={styles.heroDecoration}></div>
+    </section>
+  );
+}
+
 export default async function Home() {
-  let services: Service[] = [];  // ← явная типизация
-  let reviews: Review[] = [];    // ← явная типизация
-  
+  let services: Service[] = [];
+  let reviews: Review[] = [];
+  let hero: HeroData | null = null;
+
   try {
     const servicesData = await getServices();
     services = servicesData.docs.slice(0, 6);
@@ -26,6 +122,12 @@ export default async function Home() {
     console.error('Failed to fetch reviews:', error);
   }
 
+  try {
+    hero = await getHero();
+  } catch (error) {
+    console.error('Failed to fetch hero:', error);
+  }
+
   const equipmentTypes = [
     'Промышленный холодильник',
     'Морозильная камера',
@@ -37,27 +139,8 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>
-            Ремонт промышленных холодильников 24/7
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Срочный выезд мастера в день обращения. 
-            Ремонт любой сложности с гарантией до 12 месяцев.
-          </p>
-          <div className={styles.heroActions}>
-            <Link href="#form" className={styles.heroButton}>
-              Вызвать мастера
-            </Link>
-            <Link href="/services" className={styles.heroLink}>
-              Все услуги →
-            </Link>
-          </div>
-        </div>
-        <div className={styles.heroDecoration}></div>
-      </section>
+      {/* Hero Section - Dynamic from CMS */}
+      {hero ? <DynamicHero hero={hero} /> : <DefaultHero />}
 
       {/* Services Section */}
       <section className="section" id="services">

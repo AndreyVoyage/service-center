@@ -36,6 +36,20 @@ export interface Media {
   height?: number;
 }
 
+export interface HeroData {
+  isActive: boolean;
+  title: string;
+  subtitle?: string;
+  backgroundType: 'image' | 'color';
+  backgroundImage?: Media | string;
+  backgroundColor?: 'blue' | 'dark' | 'white';
+  ctaText: string;
+  ctaLink: string;
+  showSecondaryLink: boolean;
+  secondaryLinkText?: string;
+  secondaryLinkHref?: string;
+}
+
 export interface FormSubmission {
   name: string;
   phone: string;
@@ -53,11 +67,11 @@ async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> 
         ...options?.headers,
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`API Error: ${response.status}`);
     }
-    
+
     return await response.json();
   } catch (error) {
     console.error('Fetch error:', error);
@@ -91,6 +105,18 @@ export async function getReviews(): Promise<{ docs: Review[] }> {
   return fetchAPI<{ docs: Review[] }>(`/reviews?limit=20&sort=-createdAt`, {
     next: { revalidate: 60 },
   });
+}
+
+export async function getHero(): Promise<HeroData | null> {
+  try {
+    const response = await fetchAPI<{ hero?: HeroData }>(`/globals/hero`, {
+      cache: 'no-store',
+    });
+    return response.hero || null;
+  } catch (error) {
+    console.error('Failed to fetch hero:', error);
+    return null;
+  }
 }
 
 export async function submitForm(data: FormSubmission): Promise<any> {

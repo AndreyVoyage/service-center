@@ -8,6 +8,35 @@
   overflow: hidden;
 }
 
+/* Hero Background Classes */
+.hero-bg-blue {
+  background: linear-gradient(135deg, #2563EB 0%, #1d4ed8 100%);
+  color: #ffffff;
+}
+
+.hero-bg-dark {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.hero-bg-white {
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.hero-bg-white .heroButton {
+  background: #2563EB;
+  color: #ffffff;
+}
+
+.hero-bg-white .heroLink {
+  color: #2563EB;
+}
+
+.hero-bg-white .heroDecoration {
+  background: rgba(37, 99, 235, 0.1);
+}
+
 .heroContent {
   max-width: 600px;
   position: relative;
