@@ -1,0 +1,163 @@
+/* apps/web/src/app/services/[slug]/page.module.css */
+.breadcrumbs {
+  padding: 16px 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.breadcrumbs a {
+  color: #2563EB;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  padding: 24px 0 48px;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563EB;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #eff6ff;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.description {
+  color: #4B5563;
+  line-height: 1.7;
+  font-size: 1.0625rem;
+}
+
+.description p {
+  margin-bottom: 16px;
+}
+
+.description h2,
+.description h3 {
+  color: #111827;
+  margin: 24px 0 12px;
+}
+
+.description ul {
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.gallery {
+  margin-top: 48px;
+}
+
+.galleryTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #111827;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.galleryItem {
+  position: relative;
+  aspect-ratio: 16/10;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.galleryImage {
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.galleryItem:hover .galleryImage {
+  transform: scale(1.05);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formCard {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 80px;
+}
+
+.formTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.formSubtitle {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+}
+
+.infoCard {
+  background: #f0fdf4;
+  padding: 24px;
+  border-radius: 8px;
+  border-left: 4px solid #22c55e;
+}
+
+.infoCard h4 {
+  color: #15803d;
+  margin-bottom: 16px;
+  font-size: 1.125rem;
+}
+
+.infoCard ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #166534;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .grid {
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+  }
+
+  .galleryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
