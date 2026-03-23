@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `main`  
-**Сгенерировано:** 20.03.2026, 23:27:52
+**Сгенерировано:** 23.03.2026, 17:56:28
 
 ## 📂 Дерево файлов
 
@@ -93,7 +93,35 @@
 │   │   ├── vitest.config.mts
 │   │   └── vitest.setup.ts
 │   └── web/
-│       └── package.json
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── services/
+│       │   │   │   ├── [slug]/
+│       │   │   │   │   ├── page.module.css
+│       │   │   │   │   └── page.tsx
+│       │   │   │   ├── page.module.css
+│       │   │   │   └── page.tsx
+│       │   │   ├── globals.css
+│       │   │   ├── layout.tsx
+│       │   │   ├── page.module.css
+│       │   │   └── page.tsx
+│       │   ├── components/
+│       │   │   ├── Footer.Module.css
+│       │   │   ├── Footer.tsx
+│       │   │   ├── Header.module.css
+│       │   │   ├── Header.tsx
+│       │   │   ├── RequestForm.module.css
+│       │   │   ├── RequestForm.tsx
+│       │   │   ├── ReviewSlider.module.css
+│       │   │   ├── ReviewSlider.tsx
+│       │   │   ├── ServiceCard.module.css
+│       │   │   └── ServiceCard.tsx
+│       │   └── lib/
+│       │       └── api.ts
+│       ├── next-env.d.ts
+│       ├── next.config.js
+│       ├── package.json
+│       └── tsconfig.json
 ├── packages/
 │   ├── config/
 │   │   ├── eslint/
@@ -164,6 +192,9 @@
 - [apps/cms/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/next-env.d.ts)
 - [apps/cms/playwright.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/playwright.config.ts)
 - [apps/cms/vitest.setup.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/vitest.setup.ts)
+- [apps/web/src/lib/api.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/lib/api.ts)
+- [apps/web/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/next-env.d.ts)
+- [apps/web/next.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/next.config.js)
 
 ### 🎨 Frontend
 
@@ -174,6 +205,20 @@
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx)
 - [apps/cms/src/app/(payload)/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/app/(payload)/layout.tsx)
 - [apps/cms/src/components/ExportCSV.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/src/components/ExportCSV.tsx)
+- [apps/web/src/app/services/[slug]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/services/[slug]/page.tsx)
+- [apps/web/src/app/services/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/services/page.tsx)
+- [apps/web/src/app/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/layout.tsx)
+- [apps/web/src/app/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/page.tsx)
+- [apps/web/src/components/Footer.Module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Footer.Module.css)
+- [apps/web/src/components/Footer.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Footer.tsx)
+- [apps/web/src/components/Header.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Header.module.css)
+- [apps/web/src/components/Header.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Header.tsx)
+- [apps/web/src/components/RequestForm.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/RequestForm.module.css)
+- [apps/web/src/components/RequestForm.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/RequestForm.tsx)
+- [apps/web/src/components/ReviewSlider.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/ReviewSlider.module.css)
+- [apps/web/src/components/ReviewSlider.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/ReviewSlider.tsx)
+- [apps/web/src/components/ServiceCard.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/ServiceCard.module.css)
+- [apps/web/src/components/ServiceCard.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/ServiceCard.tsx)
 
 ### 📄 Прочие файлы
 
@@ -192,6 +237,11 @@
 - [apps/cms/test.env](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/test.env)
 - [apps/cms/tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/tsconfig.json)
 - [apps/cms/vitest.config.mts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/cms/vitest.config.mts)
+- [apps/web/src/app/services/[slug]/page.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/services/[slug]/page.module.css)
+- [apps/web/src/app/services/page.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/services/page.module.css)
+- [apps/web/src/app/globals.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/globals.css)
+- [apps/web/src/app/page.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/app/page.module.css)
+- [apps/web/tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/tsconfig.json)
 - [packages/config/eslint/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/eslint/index.ts)
 - [packages/config/prettier/index.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/prettier/index.json)
 - [packages/config/tsconfig/base.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/packages/config/tsconfig/base.json)
