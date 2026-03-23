@@ -6,7 +6,9 @@ import ReviewSlider from '@/components/ReviewSlider';
 import RequestForm from '@/components/RequestForm';
 import styles from './page.module.css';
 
-export const revalidate = 60;
+// Отключаем статическую генерацию и кэширование для dev-режима
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 // Helper function to get background class based on color
 function getHeroBackgroundClass(backgroundColor?: string): string {
@@ -30,6 +32,7 @@ function getBackgroundImageUrl(backgroundImage: Media | string | undefined): str
 
 // Default Hero component when API fails or returns no data
 function DefaultHero() {
+  console.log('[Hero] Rendering DEFAULT hero (API failed or no data)');
   return (
     <section className={`${styles.hero} ${styles['hero-bg-blue']}`}>
       <div className={styles.heroContent}>
@@ -58,6 +61,7 @@ function DefaultHero() {
 function DynamicHero({ hero }: { hero: HeroData }) {
   // If hero is inactive, don't render
   if (!hero.isActive) {
+    console.log('[Hero] Hero is inactive (isActive = false)');
     return null;
   }
 
@@ -73,11 +77,25 @@ function DynamicHero({ hero }: { hero: HeroData }) {
     ? { backgroundImage: `url(${process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001'}${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
     : undefined;
 
+  console.log('[Hero] Rendering DYNAMIC hero from CMS:', {
+    title: hero.title,
+    backgroundType: hero.backgroundType,
+    backgroundColor: hero.backgroundColor,
+    hasBackgroundImage: !!backgroundImageUrl,
+    isActive: hero.isActive,
+  });
+
   return (
     <section
       className={`${styles.hero} ${backgroundClass}`}
       style={sectionStyle}
     >
+      {/* Индикатор CMS Connected (только для отладки) */}
+      <div className={styles.cmsIndicator} title="Данные загружены из CMS">
+        <span className={styles.cmsIndicatorDot}></span>
+        CMS Connected
+      </div>
+
       <div className={styles.heroContent}>
         <h1 className={styles.heroTitle}>
           {hero.title || 'Ремонт промышленных холодильников 24/7'}
@@ -104,6 +122,10 @@ function DynamicHero({ hero }: { hero: HeroData }) {
 }
 
 export default async function Home() {
+  console.log('\n========== PAGE RENDER START ==========');
+  console.log('[Page] Fetching data from CMS...');
+  console.log('[Page] CMS URL:', process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001');
+
   let services: Service[] = [];
   let reviews: Review[] = [];
   let hero: HeroData | null = null;
@@ -111,22 +133,35 @@ export default async function Home() {
   try {
     const servicesData = await getServices();
     services = servicesData.docs.slice(0, 6);
+    console.log(`[Page] Loaded ${services.length} services`);
   } catch (error) {
-    console.error('Failed to fetch services:', error);
+    console.error('[Page] Failed to fetch services:', error);
   }
 
   try {
     const reviewsData = await getReviews();
     reviews = reviewsData.docs;
+    console.log(`[Page] Loaded ${reviews.length} reviews`);
   } catch (error) {
-    console.error('Failed to fetch reviews:', error);
+    console.error('[Page] Failed to fetch reviews:', error);
   }
 
   try {
     hero = await getHero();
+    console.log('[Page] Hero data loaded:', hero ? 'SUCCESS' : 'NULL');
+    if (hero) {
+      console.log('[Page] Hero details:', {
+        title: hero.title,
+        isActive: hero.isActive,
+        backgroundType: hero.backgroundType,
+        backgroundColor: hero.backgroundColor,
+      });
+    }
   } catch (error) {
-    console.error('Failed to fetch hero:', error);
+    console.error('[Page] Failed to fetch hero:', error);
   }
+
+  console.log('========== PAGE RENDER END ==========\n');
 
   const equipmentTypes = [
     'Промышленный холодильник',

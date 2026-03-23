@@ -8,10 +8,10 @@ type CollectionSlug = keyof Config['collections']
 export const Review: CollectionConfig = {
   slug: 'reviews',
   access: {
-  read: isStaff,
+  read: () => true,
   create: isStaff,
-  update: isAdmin,
-  delete: isDeveloper
+  update: isStaff,
+  delete: isAdmin,
 },
   fields: [
     { name: 'name', type: 'text', required: true },

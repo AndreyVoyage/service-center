@@ -1,5 +1,7 @@
 // apps/web/src/lib/api.ts
-const API_URL = 'http://localhost:3001/api';
+const API_URL = `${process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000'}/api`;
+
+console.log('[API] CMS URL configured:', API_URL);
 
 export interface Service {
   id: string;
@@ -37,17 +39,20 @@ export interface Media {
 }
 
 export interface HeroData {
+  id?: string | number; // Payload всегда возвращает id
   isActive: boolean;
   title: string;
   subtitle?: string;
   backgroundType: 'image' | 'color';
-  backgroundImage?: Media | string;
+  backgroundImage?: Media | string | number;
   backgroundColor?: 'blue' | 'dark' | 'white';
   ctaText: string;
   ctaLink: string;
   showSecondaryLink: boolean;
   secondaryLinkText?: string;
   secondaryLinkHref?: string;
+  updatedAt?: string;
+  createdAt?: string;
 }
 
 export interface FormSubmission {
@@ -59,9 +64,13 @@ export interface FormSubmission {
 }
 
 async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const url = `${API_URL}${endpoint}`;
+  console.log(`[API] Fetching: ${url}`);
+
   try {
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const response = await fetch(url, {
       ...options,
+      cache: options?.cache ?? 'no-store',
       headers: {
         'Content-Type': 'application/json',
         ...options?.headers,
@@ -69,12 +78,14 @@ async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> 
     });
 
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log(`[API] Success: ${url} - Status: ${response.status}`);
+    return data;
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error(`[API] Error fetching ${url}:`, error);
     throw error;
   }
 }
@@ -83,7 +94,7 @@ export async function getServices(category?: string): Promise<{ docs: Service[] 
   const params = new URLSearchParams();
   params.append('limit', '100');
   if (category) params.append('where[category][equals]', category);
-  
+
   return fetchAPI<{ docs: Service[] }>(`/services?${params.toString()}`, {
     next: { revalidate: 60 },
   });
@@ -108,18 +119,34 @@ export async function getReviews(): Promise<{ docs: Review[] }> {
 }
 
 export async function getHero(): Promise<HeroData | null> {
+  const endpoint = '/globals/hero';
+  console.log(`[API] getHero() called - fetching from ${API_URL}${endpoint}`);
+
   try {
-    const response = await fetchAPI<{ hero?: HeroData }>(`/globals/hero`, {
+    const data = await fetchAPI<HeroData>(endpoint, {
       cache: 'no-store',
     });
-    return response.hero || null;
+
+    console.log('[API] getHero() response:', JSON.stringify(data, null, 2));
+
+    if (!data || !data.id) {
+      console.warn('[API] getHero() - no hero data in response');
+      return null;
+    }
+
+    console.log('[API] getHero() - hero loaded successfully:', {
+      title: data.title,
+      isActive: data.isActive,
+    });
+
+    return data;
   } catch (error) {
-    console.error('Failed to fetch hero:', error);
+    console.error('[API] getHero() failed:', error);
     return null;
   }
 }
 
-export async function submitForm(data: FormSubmission): Promise<any> {
+export async function submitForm(data: FormSubmission): Promise<unknown> {
   return fetchAPI('/form-submissions', {
     method: 'POST',
     body: JSON.stringify({ data }),

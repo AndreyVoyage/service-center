@@ -104,6 +104,48 @@
   z-index: 1;
 }
 
+/* CMS Connected Indicator (for debugging) */
+.cmsIndicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #10b981;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 20px;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cmsIndicatorDot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Hide indicator on small screens */
+@media (max-width: 640px) {
+  .cmsIndicator {
+    display: none;
+  }
+}
+
 /* Services Section */
 .servicesGrid {
   display: grid;

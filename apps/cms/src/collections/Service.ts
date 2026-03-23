@@ -9,11 +9,12 @@ type CollectionSlug = keyof Config['collections']
 export const Service: CollectionConfig = {
   slug: 'services',
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'price', 'category'] },
-  access: { 
-    read: isStaff,
-    create: isStaff,
-    update: isAdmin,
-    delete: isDeveloper },
+  access: {
+  read: () => true, // Было: read: isStaff  или read: isAdmin
+  create: isStaff,
+  update: isStaff,
+  delete: isAdmin,
+},
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', required: true, unique: true, localized: true },
