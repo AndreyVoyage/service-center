@@ -13,7 +13,20 @@ export interface Service {
   icon?: string;
   image?: Media;
   category?: Category;
-  gallery?: Media[];
+  gallery?: GalleryItem[];
+  documents?: DocumentItem[];
+}
+
+export interface GalleryItem {
+  id: string;
+  image: Media;
+  alt?: string;
+}
+
+export interface DocumentItem {
+  id: string;
+  title?: string;
+  file: Media;
 }
 
 export interface Category {
@@ -36,15 +49,16 @@ export interface Media {
   alt: string;
   width?: number;
   height?: number;
+  filename?: string;
 }
 
 export interface HeroData {
-  id?: string | number; // Payload всегда возвращает id
+  id?: string | number;
   isActive: boolean;
   title: string;
   subtitle?: string;
   backgroundType: 'image' | 'color';
-  backgroundImage?: Media | string | number;
+  backgroundImage?: Media | number;
   backgroundColor?: 'blue' | 'dark' | 'white';
   ctaText: string;
   ctaLink: string;
@@ -93,6 +107,7 @@ async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> 
 export async function getServices(category?: string): Promise<{ docs: Service[] }> {
   const params = new URLSearchParams();
   params.append('limit', '100');
+  params.append('depth', '1'); // Загружаем связанные медиа
   if (category) params.append('where[category][equals]', category);
 
   return fetchAPI<{ docs: Service[] }>(`/services?${params.toString()}`, {
@@ -101,7 +116,7 @@ export async function getServices(category?: string): Promise<{ docs: Service[] 
 }
 
 export async function getServiceBySlug(slug: string): Promise<{ docs: Service[] }> {
-  return fetchAPI<{ docs: Service[] }>(`/services?where[slug][equals]=${slug}`, {
+  return fetchAPI<{ docs: Service[] }>(`/services?where[slug][equals]=${slug}&depth=1`, {
     next: { revalidate: 60 },
   });
 }
@@ -119,7 +134,7 @@ export async function getReviews(): Promise<{ docs: Review[] }> {
 }
 
 export async function getHero(): Promise<HeroData | null> {
-  const endpoint = '/globals/hero';
+  const endpoint = '/globals/hero?depth=1';
   console.log(`[API] getHero() called - fetching from ${API_URL}${endpoint}`);
 
   try {
@@ -137,6 +152,7 @@ export async function getHero(): Promise<HeroData | null> {
     console.log('[API] getHero() - hero loaded successfully:', {
       title: data.title,
       isActive: data.isActive,
+      hasImage: !!data.backgroundImage,
     });
 
     return data;
@@ -151,4 +167,28 @@ export async function submitForm(data: FormSubmission): Promise<unknown> {
     method: 'POST',
     body: JSON.stringify({ data }),
   });
+}
+
+export function getMediaUrl(media: Media | string | number | undefined): string | null {
+  if (!media) return null;
+  
+  if (typeof media === 'string') return media;
+  
+  if (typeof media === 'object' && 'url' in media) {
+    const baseUrl = process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3000';
+    return media.url.startsWith('http') ? media.url : `${baseUrl}${media.url}`;
+  }
+  
+  console.warn('[API] Media is ID only, fetching full object needed:', media);
+  return null;
+}
+
+export async function getHeroBackgroundImage(imageId: number | string): Promise<string | null> {
+  try {
+    const media = await fetchAPI<Media>(`/media/${imageId}`);
+    return getMediaUrl(media);
+  } catch (error) {
+    console.error('[API] Failed to load hero background image:', error);
+    return null;
+  }
 }

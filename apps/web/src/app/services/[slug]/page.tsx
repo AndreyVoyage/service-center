@@ -1,114 +1,104 @@
-// apps/web/src/app/services/[slug]/page.tsx
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import { getServiceBySlug, getServices } from '@/lib/api';
-import RequestForm from '@/components/RequestForm';
+import { getServiceBySlug, GalleryItem, DocumentItem } from '@/lib/api';
 import styles from './page.module.css';
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  try {
-    const { docs: services } = await getServices();
-    return services.map((service) => ({
-      slug: service.slug,
-    }));
-  } catch {
-  return [];
-}
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const { docs } = await getServiceBySlug(params.slug);
-  const service = docs[0];
-  
-  if (!service) {
-    return {
-      title: 'Услуга не найдена',
-    };
-  }
-
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
   return {
-    title: `${service.title} | ColdService`,
-    description: service.shortDescription || service.description.slice(0, 160),
+    title: `Услуга ${slug}`,
   };
 }
 
-export default async function ServicePage({ params }: { params: { slug: string } }) {
-  const { docs } = await getServiceBySlug(params.slug);
-  const service = docs[0];
+export default async function ServicePage({ params }: PageProps) {
+  const { slug } = await params;
+  
+  const response = await getServiceBySlug(slug);
+  const service = response.docs[0];
 
   if (!service) {
     notFound();
   }
 
-  const hasGallery = service.gallery && service.gallery.length > 0;
+  // Получаем URL главной картинки
+  const mainImageUrl = typeof service.image === 'object' && service.image?.url
+    ? `http://localhost:3000${service.image.url}`
+    : null;
+
+  // Получаем галерею
+  const galleryImages: (string | null)[] = service.gallery?.map((item: GalleryItem) => {
+    if (typeof item === 'object' && item.image?.url) {
+      return `http://localhost:3000${item.image.url}`;
+    }
+    return null;
+  }).filter((url): url is string => url !== null) || [];
+
+  // Получаем документы
+  const documents: { title: string; url: string; filename: string }[] = service.documents?.map((doc: DocumentItem) => {
+    if (typeof doc === 'object' && doc.file?.url) {
+      return {
+        title: doc.title || 'Документ',
+        url: `http://localhost:3000${doc.file.url}`,
+        filename: doc.file.filename || 'file',
+      };
+    }
+    return null;
+  }).filter((doc): doc is { title: string; url: string; filename: string } => doc !== null) || [];
 
   return (
-    <div className="container">
-      <div className={styles.breadcrumbs}>
-        <a href="/">Главная</a>
-        <span>/</span>
-        <a href="/services">Услуги</a>
-        <span>/</span>
-        <span>{service.title}</span>
-      </div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>{service.title}</h1>
+      
+      {mainImageUrl && (
+        <img 
+          src={mainImageUrl} 
+          alt={service.title} 
+          className={styles.mainImage}
+        />
+      )}
 
-      <div className={styles.grid}>
-        <div className={styles.content}>
-          <h1 className={styles.title}>{service.title}</h1>
-          
-          {service.price && (
-            <div className={styles.price}>
-              от {service.price.toLocaleString('ru-RU')} ₽
-            </div>
-          )}
+      {service.description && (
+        <div 
+          className={styles.description}
+          dangerouslySetInnerHTML={{ __html: service.description }}
+        />
+      )}
 
-          <div 
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: service.description }}
-          />
-
-          {hasGallery && (
-            <div className={styles.gallery}>
-              <h2 className={styles.galleryTitle}>Примеры работ</h2>
-              <div className={styles.galleryGrid}>
-                {service.gallery?.map((image, index) => (
-                  <div key={index} className={styles.galleryItem}>
-                    <Image
-                      src={`http://localhost:3001${image.url}`}
-                      alt={image.alt || `Фото ${index + 1}`}
-                      fill
-                      className={styles.galleryImage}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+      {service.price && (
+        <div className={styles.priceBlock}>
+          <h2>Стоимость</h2>
+          <p className={styles.price}>от {service.price} ₽</p>
         </div>
+      )}
 
-        <div className={styles.sidebar}>
-          <div className={styles.formCard}>
-            <h3 className={styles.formTitle}>Заявка на ремонт</h3>
-            <p className={styles.formSubtitle}>
-              Оставьте заявку на "{service.title}" и мы свяжемся с вами
-            </p>
-            <RequestForm preselectedService={service.title} />
-          </div>
-
-          <div className={styles.infoCard}>
-            <h4>Почему мы?</h4>
-            <ul>
-              <li>✓ Выезд в день обращения</li>
-              <li>✓ Гарантия до 12 месяцев</li>
-              <li>✓ Оригинальные запчасти</li>
-              <li>✓ Бесплатная диагностика</li>
-            </ul>
+      {galleryImages.length > 0 && (
+        <div className={styles.gallery}>
+          <h2>Примеры работ</h2>
+          <div className={styles.galleryGrid}>
+                        {galleryImages.map((url, index: number) => (
+              url && <img key={index} src={url} alt={`Фото ${index + 1}`} />
+            ))}
           </div>
         </div>
-      </div>
+      )}
+
+      {documents.length > 0 && (
+        <div className={styles.documents}>
+          <h2>Документы</h2>
+          <ul>
+            {documents.map((doc, index: number) => (
+              <li key={index}>
+                <a href={doc.url} target="_blank" rel="noopener noreferrer">
+                  📄 {doc.title} ({doc.filename})
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

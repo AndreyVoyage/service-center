@@ -6,10 +6,10 @@ import { isStaff, isAdmin, isDeveloper } from '../access/isStaff'
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-  read: isStaff,
+  read: () => true,  // Добавь это или измени существующее
   create: isStaff,
-  update: isAdmin,
-  delete: isDeveloper
+  update: isStaff,
+  delete: isAdmin,
 },
   upload: {
     staticDir: 'media',
