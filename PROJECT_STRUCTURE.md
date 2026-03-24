@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `main`  
-**Сгенерировано:** 23.03.2026, 20:35:13
+**Сгенерировано:** 24.03.2026, 15:00:13
 
 ## 📂 Дерево файлов
 
@@ -15,11 +15,14 @@
 │   │   │   ├── launch.json
 │   │   │   └── settings.json
 │   │   ├── docs/
+│   │   │   ├── ЗАГРАН ПАСПОРТ.pdf
 │   │   │   └── doc-2Анкета в формате pdf.pdf
 │   │   ├── media/
+│   │   │   ├── DoA2tffNbDg.jpg
 │   │   │   ├── Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png
 │   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png
 │   │   │   ├── iiii.jpg
+│   │   │   ├── photo_2023-12-12_19-02-54.jpg
 │   │   │   ├── photo_2026-02-18_14-49-53.jpg
 │   │   │   └── zzzzzzzzzzzz.jpg
 │   │   ├── src/
@@ -112,6 +115,7 @@
 │       │   │   ├── Footer.tsx
 │       │   │   ├── Header.module.css
 │       │   │   ├── Header.tsx
+│       │   │   ├── Hero.tsx
 │       │   │   ├── RequestForm.module.css
 │       │   │   ├── RequestForm.tsx
 │       │   │   ├── ReviewSlider.module.css
@@ -222,6 +226,7 @@
 - [apps/web/src/components/Footer.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Footer.tsx)
 - [apps/web/src/components/Header.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Header.module.css)
 - [apps/web/src/components/Header.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Header.tsx)
+- [apps/web/src/components/Hero.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/Hero.tsx)
 - [apps/web/src/components/RequestForm.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/RequestForm.module.css)
 - [apps/web/src/components/RequestForm.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/RequestForm.tsx)
 - [apps/web/src/components/ReviewSlider.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/main/apps/web/src/components/ReviewSlider.module.css)
@@ -264,9 +269,12 @@
 
 ### 🔴 Бинарные файлы (пропущены)
 
+- apps/cms/docs/ЗАГРАН ПАСПОРТ.pdf (binary)
+- apps/cms/media/DoA2tffNbDg.jpg (binary)
 - apps/cms/media/Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png (binary)
 - apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png (binary)
 - apps/cms/media/iiii.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-02-54.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-53.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz.jpg (binary)
 - Ordrer to Provision Gdansk 13.12.2025.xlsx (binary)
