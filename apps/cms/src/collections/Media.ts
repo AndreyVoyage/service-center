@@ -1,27 +1,27 @@
-// apps/cms/src/collections/Media.ts
-import { CollectionConfig } from 'payload'
-
-import { isStaff, isAdmin, isDeveloper } from '../access/isStaff'
+import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-  read: () => true,  // Добавь это или измени существующее
-  create: isStaff,
-  update: isStaff,
-  delete: isAdmin,
-},
+    read: () => true,
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => user?.role === 'developer',
+  },
   upload: {
+    staticURL: '/media',
     staticDir: 'media',
     imageSizes: [
-      { name: 'card', width: 640, height: 384 },
-      { name: 'thumb', width: 320, height: 320 }
+      { name: 'thumbnail', width: 300, height: 200, crop: 'center' },
+      { name: 'card', width: 600, height: 400 },
+      { name: 'full', width: 1200 },
     ],
-    adminThumbnail: 'thumb',
-    mimeTypes: ['image/*']
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
   },
   fields: [
-    { name: 'alt', type: 'text', localized: true },
-    { name: 'caption', type: 'text', localized: true }
-  ]
+    {
+      name: 'alt',
+      type: 'text',
+    },
+  ],
 }

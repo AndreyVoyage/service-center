@@ -1,34 +1,38 @@
-/* Users.ts –– расширяем стандартную коллекцию */
-import { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload'
+import { isDeveloper } from '../access/roles'
 
 export const Users: CollectionConfig = {
   slug: 'users',
-  admin: { useAsTitle: 'email' },
-  auth: true,
+  auth: { useAPIKey: true },
   access: {
-    read: ({ req: { user } }) => {
-      // менеджер и выше видят всех, гость – никого
-      if (!user) return false
-      return true
-    },
-    create: ({ req: { user } }) =>
-      ['admin', 'developer'].includes(user?.role as string),
-    update: ({ req: { user } }) =>
-      ['admin', 'developer'].includes(user?.role as string),
-    delete: ({ req: { user } }) => user?.role === 'developer'
+    create: isDeveloper, // Теперь строго
+    read: isDeveloper,
+    update: isDeveloper,
+    delete: isDeveloper,
+    admin: ({ req: { user } }) => user?.role === 'developer',
+  },
+  admin: {
+    useAsTitle: 'email',
+    defaultColumns: ['email', 'role'],
   },
   fields: [
-    { name: 'fullname', type: 'text' },
+    {
+      name: 'email',
+      type: 'email',
+      required: true,
+    },
     {
       name: 'role',
       type: 'select',
       required: true,
-      defaultValue: 'manager',
+      defaultValue: 'admin',
       options: [
         { label: 'Developer', value: 'developer' },
         { label: 'Admin', value: 'admin' },
-        { label: 'Manager', value: 'manager' }
-      ]
-    }
-  ]
+      ],
+      access: {
+        update: isDeveloper,
+      },
+    },
+  ],
 }

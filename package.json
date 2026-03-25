@@ -1,26 +1,20 @@
 {
-    "name": "service-center",
-    "private": true,
-    "type": "module",
-    "packageManager": "pnpm@9.0.6",
-    "scripts": {
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
-        "type-check": "tsc --noEmit",
-        "structure": "node generate-structure.js"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.35.0",
-        "eslint": "^9.35.0",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-react": "^7.37.5",
-        "eslint-plugin-react-hooks": "^5.2.0",
-        "prettier": "^3.6.2",
-        "typescript": "^5.9.2",
-        "typescript-eslint": "^8.43.0"
-    },
-    "dependencies": {
-        "@payloadcms/next": "^3.55.1",
-        "pnpm": "^10.16.1"
-    }
+  "name": "service-center",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "type-check": "turbo run type-check",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "packageManager": "pnpm@9.0.0"
 }
