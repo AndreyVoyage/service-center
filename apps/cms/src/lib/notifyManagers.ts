@@ -5,7 +5,7 @@ import type { FormSubmission } from '@/payload-types'
 import type { Payload } from 'payload'
 
 export async function notifyManagers(
-  doc: FormSubmission,
+  doc: FormSubmission, 
   payload: Payload
 ): Promise<void> {
   const { formType, data } = doc
