@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 27.03.2026, 22:14:23
+**Сгенерировано:** 28.03.2026, 00:21:23
 
 ## 📂 Дерево файлов
 
@@ -29,6 +29,9 @@
 │   │   │   ├── iiii.jpg
 │   │   │   ├── photo_2023-12-12_19-02-54.jpg
 │   │   │   ├── photo_2026-02-18_14-49-53.jpg
+│   │   │   ├── photo_2026-02-18_14-49-54-300x200.jpg
+│   │   │   ├── photo_2026-02-18_14-49-54-600x400.jpg
+│   │   │   ├── photo_2026-02-18_14-49-54.jpg
 │   │   │   └── zzzzzzzzzzzz.jpg
 │   │   ├── src/
 │   │   │   ├── access/
@@ -58,9 +61,8 @@
 │   │   │   │   ├── api/
 │   │   │   │   │   └── health/
 │   │   │   │   │       └── route.ts
-│   │   │   │   ├── my-route/
-│   │   │   │   │   └── route.ts
-│   │   │   │   └── layout.tsx
+│   │   │   │   └── my-route/
+│   │   │   │       └── route.ts
 │   │   │   ├── blocks/
 │   │   │   │   ├── Hero.ts
 │   │   │   │   ├── index.ts
@@ -293,7 +295,6 @@
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/not-found.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/admin/[[...segments]]/not-found.tsx)
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx)
 - [apps/cms/src/app/(payload)/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/layout.tsx)
-- [apps/cms/src/app/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/layout.tsx)
 - [apps/cms/src/components/ExportCSV.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/ExportCSV.tsx)
 - [apps/web/src/app/services/[slug]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/[slug]/page.tsx)
 - [apps/web/src/app/services/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/page.tsx)
@@ -364,6 +365,9 @@
 - apps/cms/media/iiii.jpg (binary)
 - apps/cms/media/photo_2023-12-12_19-02-54.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-53.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-54-300x200.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-54-600x400.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-54.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz.jpg (binary)
 - Ordrer to Provision Gdansk 13.12.2025.xlsx (binary)
 - photo_2025-12-18_22-11-47.jpg (binary)

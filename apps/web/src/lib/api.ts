@@ -1,5 +1,7 @@
 // apps/web/src/lib/api.ts
-const API_URL = process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001/api';
+
+const rawUrl = process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001';
+const API_URL = rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`;
 
 console.log('[API] CMS URL configured:', API_URL);
 
@@ -39,6 +41,7 @@ export interface Media {
 }
 
 export interface HeroData {
+  id?: string | number;  // <-- Добавлено
   isActive: boolean;
   title: string;
   subtitle?: string;
@@ -67,7 +70,6 @@ async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> 
   try {
     const response = await fetch(url, {
       ...options,
-      // По умолчанию отключаем кэширование для dev-режима
       cache: options?.cache ?? 'no-store',
       headers: {
         'Content-Type': 'application/json',
@@ -121,23 +123,25 @@ export async function getHero(): Promise<HeroData | null> {
   console.log(`[API] getHero() called - fetching from ${API_URL}${endpoint}`);
 
   try {
-    const response = await fetchAPI<{ hero?: HeroData }>(endpoint, {
-      cache: 'no-store', // Важно: отключаем кэширование для Hero
+    // Payload 3.x возвращает данные напрямую
+    const response = await fetchAPI<HeroData>(endpoint, {
+      cache: 'no-store',
     });
 
     console.log('[API] getHero() response:', JSON.stringify(response, null, 2));
 
-    if (!response.hero) {
+    // Проверяем, что ответ содержит данные (id или title)
+    if (!response || (!response.id && !response.title)) {
       console.warn('[API] getHero() - no hero data in response');
       return null;
     }
 
     console.log('[API] getHero() - hero loaded successfully:', {
-      title: response.hero.title,
-      isActive: response.hero.isActive,
+      title: response.title,
+      isActive: response.isActive,
     });
 
-    return response.hero;
+    return response;
   } catch (error) {
     console.error('[API] getHero() failed:', error);
     return null;

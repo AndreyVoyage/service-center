@@ -1,21 +1,37 @@
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
+import type { ServerFunctionClient } from 'payload'
+import config from '@payload-config'
+import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
 import React from 'react'
-import { RootLayout } from '@payloadcms/next/layouts'
-import config from '../../payload.config'
-import { importMap } from './admin/importMap'
 
-// Пробуем передать serverFunction как undefined или создать заглушку
-const serverFunction = async () => {
-  return {}
+// Стили Payload (обязательно до custom.scss)
+import '@payloadcms/next/css'
+
+import { importMap } from './admin/importMap.js'
+import './custom.scss'
+
+type Args = {
+  children: React.ReactNode
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <RootLayout 
-      config={config} 
-      importMap={importMap}
-      serverFunction={serverFunction as any}
-    >
-      {children}
-    </RootLayout>
-  )
+const serverFunction: ServerFunctionClient = async function (args) {
+  'use server'
+  return handleServerFunctions({
+    ...args,
+    config,
+    importMap,
+  })
 }
+
+const Layout = ({ children }: Args) => (
+  <RootLayout
+    config={config}
+    importMap={importMap}
+    serverFunction={serverFunction}
+  >
+    {children}
+  </RootLayout>
+)
+
+export default Layout
