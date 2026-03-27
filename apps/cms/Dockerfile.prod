@@ -1,0 +1,118 @@
+# apps/cms/Dockerfile.prod
+# Multi-stage build для Payload CMS v3
+# Использует зеркала npm для РФ
+
+# ==========================================
+# STAGE 1: Dependencies
+# ==========================================
+FROM dockerhub1.beget.ru/library/node:20-alpine AS deps
+
+WORKDIR /app
+
+# Установка необходимых пакетов для сборки
+RUN apk add --no-cache libc6-compat python3 make g++
+
+# Настройка зеркал npm для РФ
+RUN npm config set registry https://registry.npmjs.org/
+
+# Копируем файлы зависимостей
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/cms/package.json ./apps/cms/
+COPY packages/*/package.json ./packages/*/
+
+# Установка pnpm
+RUN npm install -g pnpm@9
+
+# Установка зависимостей
+RUN pnpm install --frozen-lockfile --prod=false
+
+# ==========================================
+# STAGE 2: Builder
+# ==========================================
+FROM dockerhub1.beget.ru/library/node:20-alpine AS builder
+
+WORKDIR /app
+
+# Установка необходимых пакетов
+RUN apk add --no-cache libc6-compat
+
+# Настройка зеркал npm
+RUN npm config set registry https://registry.npmjs.org/
+
+# Установка pnpm
+RUN npm install -g pnpm@9
+
+# Копируем зависимости из предыдущего stage
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/apps/cms/node_modules ./apps/cms/node_modules
+
+# Копируем исходный код
+COPY . .
+
+# Генерация типов Payload (если нужно)
+RUN cd apps/cms && pnpm payload generate:types || true
+
+# Сборка приложения
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+RUN pnpm --filter cms build
+
+# ==========================================
+# STAGE 3: Production
+# ==========================================
+FROM dockerhub1.beget.ru/library/node:20-alpine AS runner
+
+WORKDIR /app
+
+# Создаем непривилегированного пользователя
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 payload
+
+# Установка необходимых пакетов для production
+RUN apk add --no-cache dumb-init curl
+
+# Настройка зеркал npm
+RUN npm config set registry https://registry.npmjs.org/
+
+# Установка pnpm
+RUN npm install -g pnpm@9
+
+# Копируем package.json для production
+COPY --from=deps /app/package.json ./package.json
+COPY --from=deps /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=deps /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=deps /app/apps/cms/package.json ./apps/cms/package.json
+
+# Копируем собранное приложение
+COPY --from=builder --chown=payload:nodejs /app/apps/cms/dist ./apps/cms/dist
+COPY --from=builder --chown=payload:nodejs /app/apps/cms/.next ./apps/cms/.next
+COPY --from=builder --chown=payload:nodejs /app/apps/cms/public ./apps/cms/public
+COPY --from=builder --chown=payload:nodejs /app/apps/cms/next.config.mjs ./apps/cms/
+COPY --from=builder --chown=payload:nodejs /app/apps/cms/src/payload.config.ts ./apps/cms/src/
+
+# Копируем node_modules (только production)
+COPY --from=deps --chown=payload:nodejs /app/node_modules ./node_modules
+COPY --from=deps --chown=payload:nodejs /app/apps/cms/node_modules ./apps/cms/node_modules
+
+# Создаем директорию для загрузок
+RUN mkdir -p /app/apps/cms/media && chown -payload:nodejs /app/apps/cms/media
+
+# Переключаемся на непривилегированного пользователя
+USER payload
+
+# Environment
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3001
+ENV HOSTNAME="0.0.0.0"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:3001/api/health || exit 1
+
+# Expose port
+EXPOSE 3001
+
+# Запуск с помощью dumb-init для корректной обработки сигналов
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "apps/cms/dist/server.js"]

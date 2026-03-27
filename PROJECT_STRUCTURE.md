@@ -2,12 +2,17 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 27.03.2026, 11:34:53
+**Сгенерировано:** 27.03.2026, 12:23:29
 
 ## 📂 Дерево файлов
 
 ```
 📦 service-center/
+├── .github/
+│   └── workflows/
+│       └── docker-build.yml
+├── .turbo/
+│   └── cache/
 ├── apps/
 │   ├── cms/
 │   │   ├── .vscode/
@@ -50,6 +55,9 @@
 │   │   │   │   │   │       └── route.ts
 │   │   │   │   │   ├── custom.scss
 │   │   │   │   │   └── layout.tsx
+│   │   │   │   ├── api/
+│   │   │   │   │   └── health/
+│   │   │   │   │       └── route.ts
 │   │   │   │   ├── my-route/
 │   │   │   │   │   └── route.ts
 │   │   │   │   └── layout.tsx
@@ -93,6 +101,7 @@
 │   │   ├── .yarnrc
 │   │   ├── docker-compose.yml
 │   │   ├── Dockerfile
+│   │   ├── Dockerfile.prod
 │   │   ├── eslint.config.mjs
 │   │   ├── next-env.d.ts
 │   │   ├── next.config.mjs
@@ -106,6 +115,9 @@
 │   └── web/
 │       ├── src/
 │       │   ├── app/
+│       │   │   ├── api/
+│       │   │   │   └── health/
+│       │   │   │       └── route.ts
 │       │   │   ├── services/
 │       │   │   │   ├── [slug]/
 │       │   │   │   │   ├── page.module.css
@@ -133,10 +145,26 @@
 │       │       └── check-hero.ts
 │       ├── .env.local.txt
 │       ├── .env.txt
+│       ├── Dockerfile.prod
 │       ├── next-env.d.ts
 │       ├── next.config.js
 │       ├── package.json
 │       └── tsconfig.json
+├── docker/
+│   ├── nginx/
+│   │   ├── conf.d/
+│   │   │   └── default.conf.template
+│   │   └── nginx.conf
+│   ├── scripts/
+│   │   ├── generate-nginx-config.sh
+│   │   ├── setup-docker.sh
+│   │   └── update-all-clients.sh
+│   ├── .env.example
+│   ├── docker-compose.dev.yml
+│   ├── docker-compose.prod.yml
+│   ├── Makefile
+│   ├── PHASE_1_1_TESTS.md
+│   └── README.md
 ├── packages/
 │   ├── config/
 │   │   ├── eslint/
@@ -185,9 +213,15 @@
 
 - [apps/cms/docker-compose.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/docker-compose.yml)
 - [apps/cms/Dockerfile](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/Dockerfile)
+- [apps/cms/Dockerfile.prod](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/Dockerfile.prod)
 - [apps/cms/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/package.json)
 - [apps/cms/README.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/README.md)
+- [apps/web/Dockerfile.prod](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/Dockerfile.prod)
 - [apps/web/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/package.json)
+- [docker/docker-compose.dev.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/docker-compose.dev.yml)
+- [docker/docker-compose.prod.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/docker-compose.prod.yml)
+- [docker/PHASE_1_1_TESTS.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/PHASE_1_1_TESTS.md)
+- [docker/README.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/README.md)
 - [packages/config/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/package.json)
 - [packages/ui/src/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/ui/src/package.json)
 - [docker-compose.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker-compose.yml)
@@ -216,6 +250,7 @@
 - [apps/cms/src/app/(payload)/api/[...slug]/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/api/[...slug]/route.ts)
 - [apps/cms/src/app/(payload)/api/graphql/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/api/graphql/route.ts)
 - [apps/cms/src/app/(payload)/api/graphql-playground/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/api/graphql-playground/route.ts)
+- [apps/cms/src/app/api/health/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/api/health/route.ts)
 - [apps/cms/src/app/my-route/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/my-route/route.ts)
 - [apps/cms/src/blocks/Hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/blocks/Hero.ts)
 - [apps/cms/src/blocks/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/blocks/index.ts)
@@ -244,6 +279,7 @@
 - [apps/cms/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/next-env.d.ts)
 - [apps/cms/playwright.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/playwright.config.ts)
 - [apps/cms/vitest.setup.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/vitest.setup.ts)
+- [apps/web/src/app/api/health/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/api/health/route.ts)
 - [apps/web/src/lib/api.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/api.ts)
 - [apps/web/src/lib/check-hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/check-hero.ts)
 - [apps/web/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/next-env.d.ts)
@@ -277,6 +313,7 @@
 
 ### 📄 Прочие файлы
 
+- [.github/workflows/docker-build.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/.github/workflows/docker-build.yml)
 - [apps/cms/.vscode/extensions.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/.vscode/extensions.json)
 - [apps/cms/.vscode/launch.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/.vscode/launch.json)
 - [apps/cms/.vscode/settings.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/.vscode/settings.json)
@@ -299,6 +336,13 @@
 - [apps/web/.env.local.txt](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/.env.local.txt)
 - [apps/web/.env.txt](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/.env.txt)
 - [apps/web/tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/tsconfig.json)
+- [docker/nginx/conf.d/default.conf.template](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/nginx/conf.d/default.conf.template)
+- [docker/nginx/nginx.conf](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/nginx/nginx.conf)
+- [docker/scripts/generate-nginx-config.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/scripts/generate-nginx-config.sh)
+- [docker/scripts/setup-docker.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/scripts/setup-docker.sh)
+- [docker/scripts/update-all-clients.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/scripts/update-all-clients.sh)
+- [docker/.env.example](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/.env.example)
+- [docker/Makefile](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/Makefile)
 - [packages/config/eslint/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/eslint/index.ts)
 - [packages/config/prettier/index.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/prettier/index.json)
 - [packages/config/tsconfig/base.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/tsconfig/base.json)

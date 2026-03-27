@@ -1,33 +1,30 @@
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+// apps/cms/src/payload.config.ts
 import { buildConfig } from 'payload'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { Page } from './collections/Page'
 import { Users } from './collections/Users'
-import { Services } from './collections/Services'
+import { Categories } from './collections/Categories'
+import { Service } from './collections/Service'
 import { Media } from './collections/Media'
-import { ServiceFieldDefinitions } from './collections/ServiceFieldDefinitions'
-import { Navigation } from './collections/Navigation'
-import { ThemeSettings } from './globals/ThemeSettings'
+import { Documents } from './collections/Documents'
+import { Review } from './collections/Review'
+import { FormSubmission } from './collections/FormSubmission'
+import { Notifications } from './globals/Notifications'
+import { Hero } from './globals/Hero'
 
 export default buildConfig({
-  secret: process.env.PAYLOAD_SECRET || '',
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+  secret: process.env.PAYLOAD_SECRET!,
+  admin: { user: 'users' },
+  collections: [Users, Page, Categories, Service, Media, Documents, Review, FormSubmission],
+  globals: [Notifications, Hero],
+  editor: lexicalEditor({}),
+  db: postgresAdapter({
+    pool: { connectionString: process.env.DATABASE_URI! }
   }),
-  editor: lexicalEditor(),
-  collections: [Users, Services, Media, ServiceFieldDefinitions, Navigation],
-  globals: [ThemeSettings],
-  typescript: {
-    outputFile: './src/payload-types.ts',
-  },
-  routes: {
-    admin: '/admin',
-  },
-  admin: {
-    autoLogin: {
-      email: 'dev@service.center',
-      password: 'password',
-      prefillOnly: true,
-    },
-  },
+  typescript: { outputFile: './src/payload-types.ts' }
 })
+
+/* временный лог */
+console.log('>>> PAYLOAD_SECRET:', process.env.PAYLOAD_SECRET)
+console.log('>>> DATABASE_URI :', process.env.DATABASE_URI)
