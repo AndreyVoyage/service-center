@@ -1,10 +1,11 @@
 // apps/web/src/app/page.tsx
 import Link from 'next/link';
-import { getServices, getReviews, getHero, Service, Review, HeroData } from '@/lib/api';
+import { getServices, getReviews, getHero, Service, Review, HeroData, Media } from '@/lib/api';
 import ServiceCard from '@/components/ServiceCard';
 import ReviewSlider from '@/components/ReviewSlider';
 import RequestForm from '@/components/RequestForm';
 import styles from './page.module.css';
+
 
 // Отключаем статическую генерацию и кэширование для dev-режима
 export const dynamic = 'force-dynamic';

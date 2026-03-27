@@ -1,4 +1,4 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { Users } from './collections/Users'
@@ -9,12 +9,10 @@ import { Navigation } from './collections/Navigation'
 import { ThemeSettings } from './globals/ThemeSettings'
 
 export default buildConfig({
+  secret: process.env.PAYLOAD_SECRET || '',
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI,
-    },
-    idType: 'uuid',
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || '',
   }),
   editor: lexicalEditor(),
   collections: [Users, Services, Media, ServiceFieldDefinitions, Navigation],
