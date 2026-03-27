@@ -137,10 +137,12 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  fullname?: string | null;
-  role: 'developer' | 'admin' | 'manager';
+  role: 'developer' | 'admin';
   updatedAt: string;
   createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -254,7 +256,6 @@ export interface Service {
 export interface Media {
   id: number;
   alt?: string | null;
-  caption?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -267,6 +268,14 @@ export interface Media {
   focalX?: number | null;
   focalY?: number | null;
   sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
     card?: {
       url?: string | null;
       width?: number | null;
@@ -275,7 +284,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    thumb?: {
+    full?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -423,10 +432,12 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  fullname?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
   email?: T;
   resetPasswordToken?: T;
   resetPasswordExpiration?: T;
@@ -540,7 +551,6 @@ export interface ServicesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -555,6 +565,16 @@ export interface MediaSelect<T extends boolean = true> {
   sizes?:
     | T
     | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
         card?:
           | T
           | {
@@ -565,7 +585,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        thumb?:
+        full?:
           | T
           | {
               url?: T;

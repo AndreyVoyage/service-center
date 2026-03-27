@@ -1,4 +1,3 @@
-// apps/cms/src/payload.config.ts
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -13,7 +12,9 @@ import { FormSubmission } from './collections/FormSubmission'
 import { Notifications } from './globals/Notifications'
 import { Hero } from './globals/Hero'
 
-export default buildConfig({
+console.log('>>> LOADING payload.config.ts')
+
+const config = buildConfig({
   secret: process.env.PAYLOAD_SECRET!,
   admin: { user: 'users' },
   collections: [Users, Page, Categories, Service, Media, Documents, Review, FormSubmission],
@@ -25,6 +26,6 @@ export default buildConfig({
   typescript: { outputFile: './src/payload-types.ts' }
 })
 
-/* временный лог */
-console.log('>>> PAYLOAD_SECRET:', process.env.PAYLOAD_SECRET)
-console.log('>>> DATABASE_URI :', process.env.DATABASE_URI)
+console.log('>>> CONFIG CREATED:', typeof config)
+
+export default config

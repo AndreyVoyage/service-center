@@ -1,4 +1,6 @@
 import { RootPage } from '@payloadcms/next/views'
-import config from '@payload-config'
+import config from '../../../../payload.config'  // ← относительный путь
 
-export default RootPage
+export default function AdminPage(props: any) {
+  return <RootPage config={config} {...props} />
+}
