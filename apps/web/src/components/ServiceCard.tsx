@@ -1,4 +1,4 @@
-import { Service } from '@/lib/api';
+import { Service, getImageUrl, getGalleryImageUrl } from '@/lib/api';
 import styles from './ServiceCard.module.css';
 import Link from 'next/link';
 
@@ -7,19 +7,18 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service }: ServiceCardProps) {
-  // Берем thumbnail для карточки (300x200), если нет - оригинал
-  const imageUrl = service.image?.sizes?.thumbnail?.url 
-    ? `http://localhost:3001${service.image.sizes.thumbnail.url}`
-    : service.image?.url 
-      ? `http://localhost:3001${service.image.url}`
-      : '/placeholder.jpg';
+  // Получаем первое изображение из gallery или используем image
+  const firstGalleryItem = service.gallery?.[0];
+  const imageUrl = firstGalleryItem 
+    ? getGalleryImageUrl(firstGalleryItem, 'thumbnail')
+    : getImageUrl(service.image, 'thumbnail') || '/placeholder.jpg';
 
   return (
     <div className={styles.card}>
       <div className={styles.imageWrapper}>
         <img 
           src={imageUrl} 
-          alt={service.image?.alt || service.title} 
+          alt={firstGalleryItem?.alt || service.image?.alt || service.title} 
           className={styles.image}
           loading="lazy"
         />

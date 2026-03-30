@@ -5,6 +5,13 @@ const API_URL = rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`;
 
 console.log('[API] CMS URL configured:', API_URL);
 
+// Исправленный интерфейс GalleryItem
+export interface GalleryItem {
+  id?: string;
+  image: Media;
+  alt?: string;
+}
+
 export interface Service {
   id: string;
   title: string;
@@ -15,7 +22,7 @@ export interface Service {
   icon?: string;
   image?: Media;
   category?: Category | string; // может быть объектом или ID строкой
-  gallery?: Media[];
+  gallery?: GalleryItem[];  // ← массив объектов с полем image
 }
 
 export interface Category {
@@ -226,29 +233,35 @@ const CMS_URL = process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001';
 
 // Вспомогательная функция для получения URL изображения
 export function getImageUrl(
-  media: Media | undefined | null, 
+  media: Media | string | undefined | null,
   size: 'thumbnail' | 'card' | 'full' = 'full'
 ): string | null {
   if (!media) return null;
   
-  // Если запрошен full или нет такого размера в sizes — возвращаем оригинал
-  if (size === 'full') {
-    if (media.url) {
-      return media.url.startsWith('http') ? media.url : `${CMS_URL}${media.url}`;
-    }
-    return null;
+  // Если передана строка (уже URL)
+  if (typeof media === 'string') {
+    return media.startsWith('http') ? media : `${CMS_URL}${media}`;
   }
   
-  // Проверяем sizes для thumbnail и card
-  const sizedUrl = media.sizes?.[size]?.url;
-  if (sizedUrl) {
-    return `${CMS_URL}${sizedUrl}`;
+  // Проверяем размеры
+  if (size !== 'full' && media.sizes?.[size]?.url) {
+    const sizedUrl = media.sizes[size]!.url;
+    return sizedUrl.startsWith('http') ? sizedUrl : `${CMS_URL}${sizedUrl}`;
   }
   
-  // Fallback на оригинал если размер не найден
+  // Оригинал
   if (media.url) {
     return media.url.startsWith('http') ? media.url : `${CMS_URL}${media.url}`;
   }
   
   return null;
+}
+
+// Функция для получения URL из gallery item
+export function getGalleryImageUrl(
+  galleryItem: GalleryItem | undefined,
+  size: 'thumbnail' | 'card' | 'full' = 'full'
+): string | null {
+  if (!galleryItem?.image) return null;
+  return getImageUrl(galleryItem.image, size);
 }

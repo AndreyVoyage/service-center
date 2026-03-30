@@ -1,4 +1,4 @@
-import { getServiceBySlug } from '@/lib/api';
+import { getServiceBySlug, getImageUrl, getGalleryImageUrl } from '@/lib/api';
 import styles from './page.module.css';
 import { notFound } from 'next/navigation';
 
@@ -13,22 +13,21 @@ export default async function ServiceDetailPage({
   
   if (!service) notFound();
 
-  // Для детальной страницы используем card (600x400) или оригинал
-  const imageUrl = service.image?.sizes?.card?.url 
-    ? `http://localhost:3001${service.image.sizes.card.url}`
-    : service.image?.url 
-      ? `http://localhost:3001${service.image.url}`
-      : null;
+  // Получаем главное изображение: первое из gallery или image
+  const firstGalleryItem = service.gallery?.[0];
+  const mainImageUrl = firstGalleryItem 
+    ? getGalleryImageUrl(firstGalleryItem, 'card')
+    : getImageUrl(service.image, 'card');
 
   return (
     <div className={styles.container}>
       <h1>{service.title}</h1>
       
-      {imageUrl && (
+      {mainImageUrl && (
         <div className={styles.mainImage}>
           <img 
-            src={imageUrl} 
-            alt={service.image?.alt || service.title}
+            src={mainImageUrl} 
+            alt={firstGalleryItem?.alt || service.image?.alt || service.title}
             className={styles.heroImage}
           />
         </div>
@@ -40,6 +39,28 @@ export default async function ServiceDetailPage({
       
       {service.price && (
         <div className={styles.price}>Стоимость: от {service.price} ₽</div>
+      )}
+
+      {/* Галерея */}
+      {service.gallery && service.gallery.length > 0 && (
+        <div className={styles.gallery}>
+          <h2>Галерея</h2>
+          <div className={styles.galleryGrid}>
+            {service.gallery.map((item, index) => {
+              const url = getGalleryImageUrl(item, 'card');
+              if (!url) return null;
+              return (
+                <div key={item.id || index} className={styles.galleryItem}>
+                  <img 
+                    src={url} 
+                    alt={item.alt || `${service.title} - ${index + 1}`}
+                    loading="lazy"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       )}
     </div>
   );
