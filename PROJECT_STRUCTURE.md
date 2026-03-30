@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 28.03.2026, 00:21:23
+**Сгенерировано:** 30.03.2026, 18:17:46
 
 ## 📂 Дерево файлов
 
@@ -26,7 +26,14 @@
 │   │   │   ├── DoA2tffNbDg.jpg
 │   │   │   ├── Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png
 │   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png
+│   │   │   ├── iiii-1-300x200.jpg
+│   │   │   ├── iiii-1-600x400.jpg
+│   │   │   ├── iiii-1.jpg
 │   │   │   ├── iiii.jpg
+│   │   │   ├── NFdb2OSROqI-1200x1769.jpg
+│   │   │   ├── NFdb2OSROqI-300x200.jpg
+│   │   │   ├── NFdb2OSROqI-600x400.jpg
+│   │   │   ├── NFdb2OSROqI.jpg
 │   │   │   ├── photo_2023-12-12_19-02-54.jpg
 │   │   │   ├── photo_2026-02-18_14-49-53.jpg
 │   │   │   ├── photo_2026-02-18_14-49-54-300x200.jpg
@@ -125,7 +132,8 @@
 │       │   │   │   │   ├── page.module.css
 │       │   │   │   │   └── page.tsx
 │       │   │   │   ├── page.module.css
-│       │   │   │   └── page.tsx
+│       │   │   │   ├── page.tsx
+│       │   │   │   └── ServicesClient.tsx
 │       │   │   ├── globals.css
 │       │   │   ├── layout.tsx
 │       │   │   ├── page.module.css
@@ -298,6 +306,7 @@
 - [apps/cms/src/components/ExportCSV.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/ExportCSV.tsx)
 - [apps/web/src/app/services/[slug]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/[slug]/page.tsx)
 - [apps/web/src/app/services/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/page.tsx)
+- [apps/web/src/app/services/ServicesClient.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/ServicesClient.tsx)
 - [apps/web/src/app/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/layout.tsx)
 - [apps/web/src/app/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/page.tsx)
 - [apps/web/src/components/Footer.Module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Footer.Module.css)
@@ -362,7 +371,14 @@
 - apps/cms/media/DoA2tffNbDg.jpg (binary)
 - apps/cms/media/Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png (binary)
 - apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png (binary)
+- apps/cms/media/iiii-1-300x200.jpg (binary)
+- apps/cms/media/iiii-1-600x400.jpg (binary)
+- apps/cms/media/iiii-1.jpg (binary)
 - apps/cms/media/iiii.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-1200x1769.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-300x200.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-600x400.jpg (binary)
+- apps/cms/media/NFdb2OSROqI.jpg (binary)
 - apps/cms/media/photo_2023-12-12_19-02-54.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-53.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-54-300x200.jpg (binary)

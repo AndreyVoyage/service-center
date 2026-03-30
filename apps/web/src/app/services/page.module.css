@@ -80,6 +80,12 @@
   margin: 0 auto 16px;
 }
 
+.gridLoading {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

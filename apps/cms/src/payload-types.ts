@@ -218,6 +218,7 @@ export interface Page {
 export interface Category {
   id: number;
   title: string;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -515,6 +516,7 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
