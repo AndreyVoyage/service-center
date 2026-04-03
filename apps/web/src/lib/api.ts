@@ -23,12 +23,35 @@ export interface Service {
   image?: Media;
   category?: Category | string; // может быть объектом или ID строкой
   gallery?: GalleryItem[];  // ← массив объектов с полем image
+  customData?: Record<string, unknown>; // Динамические поля из Field Definitions
+}
+
+// Определение динамического поля услуги
+export interface ServiceFieldDefinition {
+  id: string;
+  fieldName: string;
+  fieldType: 'text' | 'number' | 'select' | 'checkbox';
+  label: string;
+  options?: Array<{
+    value: string;
+    label: string;
+  }>;
 }
 
 export interface Category {
   id: string;
   title: string;
   slug: string;
+}
+
+// Получить все определения полей
+export async function getServiceFieldDefinitions(): Promise<ServiceFieldDefinition[]> {
+  const res = await fetch(`${API_URL}/service-field-definitions?limit=100`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) throw new Error('Failed to fetch field definitions');
+  const data = await res.json();
+  return data.docs || [];
 }
 
 export interface Review {

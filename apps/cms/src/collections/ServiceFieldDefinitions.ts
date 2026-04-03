@@ -4,7 +4,7 @@ import { isDeveloper } from '../access/roles'
 export const ServiceFieldDefinitions: CollectionConfig = {
   slug: 'service-field-definitions',
   access: {
-    read: isDeveloper,
+    read: () => true,  // Временно открыто для всех
     create: isDeveloper,
     update: isDeveloper,
     delete: isDeveloper,

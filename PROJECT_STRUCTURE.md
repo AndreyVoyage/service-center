@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 30.03.2026, 18:31:32
+**Сгенерировано:** 03.04.2026, 21:32:11
 
 ## 📂 Дерево файлов
 
@@ -21,8 +21,13 @@
 │   │   │   └── settings.json
 │   │   ├── docs/
 │   │   │   ├── ЗАГРАН ПАСПОРТ.pdf
+│   │   │   ├── Программист тест.docx
 │   │   │   └── doc-2Анкета в формате pdf.pdf
 │   │   ├── media/
+│   │   │   ├── DoA2tffNbDg-1-1200x900.jpg
+│   │   │   ├── DoA2tffNbDg-1-300x200.jpg
+│   │   │   ├── DoA2tffNbDg-1-600x400.jpg
+│   │   │   ├── DoA2tffNbDg-1.jpg
 │   │   │   ├── DoA2tffNbDg.jpg
 │   │   │   ├── Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png
 │   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png
@@ -30,21 +35,38 @@
 │   │   │   ├── iiii-1-600x400.jpg
 │   │   │   ├── iiii-1.jpg
 │   │   │   ├── iiii.jpg
+│   │   │   ├── NFdb2OSROqI-1-1200x1769.jpg
+│   │   │   ├── NFdb2OSROqI-1-300x200.jpg
+│   │   │   ├── NFdb2OSROqI-1-600x400.jpg
+│   │   │   ├── NFdb2OSROqI-1.jpg
 │   │   │   ├── NFdb2OSROqI-1200x1769.jpg
 │   │   │   ├── NFdb2OSROqI-300x200.jpg
 │   │   │   ├── NFdb2OSROqI-600x400.jpg
 │   │   │   ├── NFdb2OSROqI.jpg
 │   │   │   ├── photo_2023-12-12_19-02-54.jpg
+│   │   │   ├── photo_2023-12-12_19-02-55-300x200.jpg
+│   │   │   ├── photo_2023-12-12_19-02-55-600x400.jpg
+│   │   │   ├── photo_2023-12-12_19-02-55.jpg
+│   │   │   ├── photo_2023-12-12_19-09-10-300x200.jpg
+│   │   │   ├── photo_2023-12-12_19-09-10-600x400.jpg
+│   │   │   ├── photo_2023-12-12_19-09-10.jpg
 │   │   │   ├── photo_2026-02-18_14-49-53.jpg
 │   │   │   ├── photo_2026-02-18_14-49-54-300x200.jpg
 │   │   │   ├── photo_2026-02-18_14-49-54-600x400.jpg
 │   │   │   ├── photo_2026-02-18_14-49-54.jpg
+│   │   │   ├── photo_2026-02-18_14-49-55-300x200.jpg
+│   │   │   ├── photo_2026-02-18_14-49-55-600x400.jpg
+│   │   │   ├── photo_2026-02-18_14-49-55.jpg
+│   │   │   ├── zzzzzzzzzzzz-1-300x200.jpg
+│   │   │   ├── zzzzzzzzzzzz-1-600x400.jpg
+│   │   │   ├── zzzzzzzzzzzz-1.jpg
 │   │   │   └── zzzzzzzzzzzz.jpg
 │   │   ├── src/
 │   │   │   ├── access/
 │   │   │   │   ├── isAdmin.ts
 │   │   │   │   ├── isStaff.ts
-│   │   │   │   └── roles.ts
+│   │   │   │   ├── roles.ts
+│   │   │   │   └── siteAccess.ts
 │   │   │   ├── app/
 │   │   │   │   ├── (frontend)/
 │   │   │   │   │   ├── layout.tsx
@@ -95,7 +117,9 @@
 │   │   │   │   └── ThemeSettings.ts
 │   │   │   ├── lib/
 │   │   │   │   ├── notifyManagers.ts
+│   │   │   │   ├── sites.ts
 │   │   │   │   └── telegram.ts
+│   │   │   ├── middleware.ts
 │   │   │   ├── payload-types.ts
 │   │   │   └── payload.config.ts
 │   │   ├── tests/
@@ -256,6 +280,7 @@
 - [apps/cms/src/access/isAdmin.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/access/isAdmin.ts)
 - [apps/cms/src/access/isStaff.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/access/isStaff.ts)
 - [apps/cms/src/access/roles.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/access/roles.ts)
+- [apps/cms/src/access/siteAccess.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/access/siteAccess.ts)
 - [apps/cms/src/app/(payload)/admin/importMap.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/admin/importMap.js)
 - [apps/cms/src/app/(payload)/api/[...slug]/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/api/[...slug]/route.ts)
 - [apps/cms/src/app/(payload)/api/graphql/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/api/graphql/route.ts)
@@ -281,7 +306,9 @@
 - [apps/cms/src/globals/Notifications.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/Notifications.ts)
 - [apps/cms/src/globals/ThemeSettings.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/ThemeSettings.ts)
 - [apps/cms/src/lib/notifyManagers.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/notifyManagers.ts)
+- [apps/cms/src/lib/sites.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/sites.ts)
 - [apps/cms/src/lib/telegram.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/telegram.ts)
+- [apps/cms/src/middleware.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/middleware.ts)
 - [apps/cms/src/payload-types.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/payload-types.ts)
 - [apps/cms/src/payload.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/payload.config.ts)
 - [apps/cms/tests/e2e/frontend.e2e.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/tests/e2e/frontend.e2e.spec.ts)
@@ -368,6 +395,11 @@
 ### 🔴 Бинарные файлы (пропущены)
 
 - apps/cms/docs/ЗАГРАН ПАСПОРТ.pdf (binary)
+- apps/cms/docs/Программист тест.docx (binary)
+- apps/cms/media/DoA2tffNbDg-1-1200x900.jpg (binary)
+- apps/cms/media/DoA2tffNbDg-1-300x200.jpg (binary)
+- apps/cms/media/DoA2tffNbDg-1-600x400.jpg (binary)
+- apps/cms/media/DoA2tffNbDg-1.jpg (binary)
 - apps/cms/media/DoA2tffNbDg.jpg (binary)
 - apps/cms/media/Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png (binary)
 - apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png (binary)
@@ -375,15 +407,31 @@
 - apps/cms/media/iiii-1-600x400.jpg (binary)
 - apps/cms/media/iiii-1.jpg (binary)
 - apps/cms/media/iiii.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-1-1200x1769.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-1-300x200.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-1-600x400.jpg (binary)
+- apps/cms/media/NFdb2OSROqI-1.jpg (binary)
 - apps/cms/media/NFdb2OSROqI-1200x1769.jpg (binary)
 - apps/cms/media/NFdb2OSROqI-300x200.jpg (binary)
 - apps/cms/media/NFdb2OSROqI-600x400.jpg (binary)
 - apps/cms/media/NFdb2OSROqI.jpg (binary)
 - apps/cms/media/photo_2023-12-12_19-02-54.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-02-55-300x200.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-02-55-600x400.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-02-55.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-09-10-300x200.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-09-10-600x400.jpg (binary)
+- apps/cms/media/photo_2023-12-12_19-09-10.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-53.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-54-300x200.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-54-600x400.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-54.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-55-300x200.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-55-600x400.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-55.jpg (binary)
+- apps/cms/media/zzzzzzzzzzzz-1-300x200.jpg (binary)
+- apps/cms/media/zzzzzzzzzzzz-1-600x400.jpg (binary)
+- apps/cms/media/zzzzzzzzzzzz-1.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz.jpg (binary)
 - Ordrer to Provision Gdansk 13.12.2025.xlsx (binary)
 - photo_2025-12-18_22-11-47.jpg (binary)

@@ -8,6 +8,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@payloadcms/next', '@payloadcms/db-postgres', '@payloadcms/richtext-lexical'],
+  
+  // Для работы middleware
+  experimental: {
+    // Payload требует для корректной работы middleware
+  },
+  
   webpack: (config, { isServer }) => {
     // Разрешаем алиасы явно
     config.resolve.alias = {

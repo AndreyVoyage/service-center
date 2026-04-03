@@ -9,9 +9,9 @@ interface ServiceCardProps {
 export default function ServiceCard({ service }: ServiceCardProps) {
   // Получаем первое изображение из gallery или используем image
   const firstGalleryItem = service.gallery?.[0];
-  const imageUrl = firstGalleryItem 
+  const imageUrl = (firstGalleryItem 
     ? getGalleryImageUrl(firstGalleryItem, 'thumbnail')
-    : getImageUrl(service.image, 'thumbnail') || '/placeholder.jpg';
+    : getImageUrl(service.image, 'thumbnail')) || '/placeholder.jpg';
 
   return (
     <div className={styles.card}>

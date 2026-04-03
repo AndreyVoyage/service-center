@@ -9,8 +9,11 @@ import { Media } from './collections/Media'
 import { Documents } from './collections/Documents'
 import { Review } from './collections/Review'
 import { FormSubmission } from './collections/FormSubmission'
+import { Navigation } from './collections/Navigation'
+import { ServiceFieldDefinitions } from './collections/ServiceFieldDefinitions'
 import { Notifications } from './globals/Notifications'
 import { Hero } from './globals/Hero'
+import { ThemeSettings } from './globals/ThemeSettings'
 
 import sharp from 'sharp'
 import path from 'path'
@@ -25,8 +28,8 @@ const config = buildConfig({
       baseDir: path.resolve(process.cwd(), 'src/app/(payload)'),
     },
   },
-  collections: [Users, Page, Categories, Service, Media, Documents, Review, FormSubmission],
-  globals: [Notifications, Hero],
+  collections: [Users, Page, Categories, Service, Media, Documents, Review, FormSubmission, Navigation, ServiceFieldDefinitions],
+  globals: [Notifications, Hero, ThemeSettings],
   sharp,
   editor: lexicalEditor({}),
   db: postgresAdapter({

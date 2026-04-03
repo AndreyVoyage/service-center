@@ -75,6 +75,8 @@ export interface Config {
     documents: Document;
     reviews: Review;
     'form-submissions': FormSubmission;
+    navigation: Navigation;
+    'service-field-definitions': ServiceFieldDefinition;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +91,8 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
+    'service-field-definitions': ServiceFieldDefinitionsSelect<false> | ServiceFieldDefinitionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -99,10 +103,12 @@ export interface Config {
   globals: {
     notifications: Notification;
     hero: Hero;
+    'theme-settings': ThemeSetting;
   };
   globalsSelect: {
     notifications: NotificationsSelect<false> | NotificationsSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
+    'theme-settings': ThemeSettingsSelect<false> | ThemeSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -349,6 +355,38 @@ export interface FormSubmission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  title: string;
+  url: string;
+  position: 'header' | 'footer';
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-field-definitions".
+ */
+export interface ServiceFieldDefinition {
+  id: number;
+  fieldName: string;
+  fieldType: 'text' | 'number' | 'select' | 'checkbox';
+  label: string;
+  options?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -385,6 +423,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'form-submissions';
         value: number | FormSubmission;
+      } | null)
+    | ({
+        relationTo: 'navigation';
+        value: number | Navigation;
+      } | null)
+    | ({
+        relationTo: 'service-field-definitions';
+        value: number | ServiceFieldDefinition;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -642,6 +688,36 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  position?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-field-definitions_select".
+ */
+export interface ServiceFieldDefinitionsSelect<T extends boolean = true> {
+  fieldName?: T;
+  fieldType?: T;
+  label?: T;
+  options?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -724,6 +800,18 @@ export interface Hero {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme-settings".
+ */
+export interface ThemeSetting {
+  id: number;
+  layoutType?: ('topnav' | 'sidebar') | null;
+  primaryColor?: string | null;
+  customCSS?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications_select".
  */
 export interface NotificationsSelect<T extends boolean = true> {
@@ -776,6 +864,18 @@ export interface HeroSelect<T extends boolean = true> {
   showSecondaryLink?: T;
   secondaryLinkText?: T;
   secondaryLinkHref?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme-settings_select".
+ */
+export interface ThemeSettingsSelect<T extends boolean = true> {
+  layoutType?: T;
+  primaryColor?: T;
+  customCSS?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
