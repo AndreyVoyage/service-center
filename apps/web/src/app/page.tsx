@@ -1,10 +1,11 @@
 // apps/web/src/app/page.tsx
 import Link from 'next/link';
-import { getServices, getReviews, getHero, getFooter, getContactForm, Service, Review, HeroData, FooterData, ContactFormData } from '@/lib/api';
+import { getServices, getReviews, getHero, getFooter, getContactForm, waitForCMS, Service, Review, HeroData, FooterData, ContactFormData } from '@/lib/api';
 import { getImageUrl } from '@/lib/api';
 import ServiceCard from '@/components/ServiceCard';
 import ReviewSlider from '@/components/ReviewSlider';
-import ContactFormWrapper from '@/components/ContactFormWrapper';
+
+import ContactSection from '@/components/ContactSection';
 import styles from './page.module.css';
 
 // ISR - статическая генерация с ревалидацией каждые 60 секунд
@@ -94,10 +95,14 @@ function HeroSection({ hero }: { hero: HeroData }) {
 }
 
 export default async function Home() {
+  // Ожидание готовности CMS (критично при первом запуске)
+  await waitForCMS(60000);
+  
   // Параллельная загрузка всех данных с мемоизацией
+  // НЕ используем .catch() для getServices/getReviews - пусть работает fallback внутри функции
   const [servicesData, reviewsData, heroData, footerData, contactFormData] = await Promise.all([
-    getMemoized('services', () => getServices().catch(() => ({ docs: [] }))),
-    getMemoized('reviews', () => getReviews().catch(() => ({ docs: [] }))),
+    getMemoized('services', () => getServices()),
+    getMemoized('reviews', () => getReviews()),
     getMemoized('hero', () => getHero().catch(() => fallbackHero)),
     getMemoized('footer', () => getFooter().catch(() => null)),
     getMemoized('contactForm', () => getContactForm().catch(() => null)),
@@ -105,6 +110,10 @@ export default async function Home() {
 
   const services = servicesData.docs.slice(0, 6);
   const reviews = reviewsData.docs;
+  
+  // Debug logging
+  console.log('[HomePage] Services loaded:', services.length, servicesData.docs.length > 0 ? '(API)' : '(Fallback)');
+  console.log('[HomePage] Reviews loaded:', reviews.length, reviewsData.docs.length > 0 ? '(API)' : '(Fallback/Empty)');
   const hero = heroData || fallbackHero;
 
   const equipmentTypes = [
@@ -181,35 +190,16 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section className="section">
-        <div className="container">
-          <h2 className="sectionTitle">Отзывы клиентов</h2>
-          <ReviewSlider reviews={reviews} />
-        </div>
-      </section>
+      {/* Reviews Section - ReviewSlider содержит свой section с БЭМ классами */}
+      <ReviewSlider reviews={reviews} />
 
-      {/* Form Section */}
-      <section className={`section ${styles.formSection}`} id="form">
-        <div className="container">
-          <div className={styles.formGrid}>
-            <div className={styles.formInfo}>
-              <h2 className={styles.formTitle}>Оставить заявку</h2>
-              <p className={styles.formText}>
-                Заполните форму, и мы перезвоним вам в течение 15 минут для уточнения деталей и согласования времени выезда мастера.
-              </p>
-              <ul className={styles.formList}>
-                <li>✓ Бесплатная диагностика при ремонте</li>
-                <li>✓ Прозрачное ценообразование</li>
-                <li>✓ Официальный договор</li>
-              </ul>
-            </div>
-            <div className={styles.formWrapper}>
-              <ContactFormWrapper equipmentTypes={equipmentTypes} />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Form Section - Редактируемый через CMS */}
+      {contactFormData?.isActive !== false && (
+        <ContactSection 
+          data={contactFormData}
+          equipmentTypes={equipmentTypes}
+        />
+      )}
     </>
   );
 }

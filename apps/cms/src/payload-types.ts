@@ -1047,6 +1047,17 @@ export interface Footer {
 export interface ContactForm {
   id: number;
   isActive?: boolean | null;
+  leftBlock?: {
+    title?: string | null;
+    description?: string | null;
+    features?:
+      | {
+          icon?: ('check' | 'star' | 'shield' | 'clock' | 'phone' | 'tool') | null;
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   title?: string | null;
   subtitle?: string | null;
   fields?: FormField;
@@ -1189,6 +1200,19 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface ContactFormSelect<T extends boolean = true> {
   isActive?: T;
+  leftBlock?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              text?: T;
+              id?: T;
+            };
+      };
   title?: T;
   subtitle?: T;
   fields?: T | FormFieldSelect<T>;

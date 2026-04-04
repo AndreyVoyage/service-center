@@ -45,6 +45,9 @@ export const fallbackServices = [
     description: 'Быстрый выезд мастера в течение 2 часов',
     shortDescription: 'Выезд мастера в течение 2 часов',
     icon: '🚨',
+    price: 2500,
+    image: null,
+    gallery: [],
   },
   {
     id: '2',
@@ -53,6 +56,9 @@ export const fallbackServices = [
     description: 'Полная диагностика оборудования с выездом на объект',
     shortDescription: 'Полная диагностика с выездом',
     icon: '🔍',
+    price: 1500,
+    image: null,
+    gallery: [],
   },
   {
     id: '3',
@@ -61,6 +67,9 @@ export const fallbackServices = [
     description: 'Заправка холодильного оборудования фреоном всех типов',
     shortDescription: 'Заправка фреоном всех типов',
     icon: '❄️',
+    price: 3500,
+    image: null,
+    gallery: [],
   },
 ]
 

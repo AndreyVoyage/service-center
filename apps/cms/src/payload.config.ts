@@ -42,8 +42,8 @@ const config = buildConfig({
       createTimeoutMillis: 5000,
       idleTimeoutMillis: 10000,
     },
-    // Отключаем auto-push
-    push: false,
+    // Временно включаем auto-push для создания таблиц
+    push: true,
   }),
   typescript: { 
     outputFile: './src/payload-types.ts',

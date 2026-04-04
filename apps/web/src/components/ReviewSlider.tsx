@@ -81,91 +81,106 @@ export default function ReviewSlider({ reviews }: ReviewSliderProps) {
     return getImageUrl(photo, 'thumbnail');
   };
 
+  // Log reviews count for debugging
+  console.log('[ReviewSlider] Rendering with', reviews.length, 'reviews');
+
   if (reviews.length === 0) {
     return (
-      <div className={styles.empty}>
-        <p>Пока нет отзывов</p>
-      </div>
+      // BEM: Блок reviews-section, элемент empty
+      <section className={styles['reviews-section']}>
+        <div className={styles['reviews-section__container']}>
+          <h2 className={styles['reviews-section__title']}>Отзывы клиентов</h2>
+          <p className={styles['reviews-section__empty']}>Пока нет отзывов</p>
+        </div>
+      </section>
     );
   }
 
   return (
-    <div className={styles.slider}>
-      <div 
-        className={styles.container}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
-        <div 
-          className={styles.track}
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {reviews.map((review) => {
-            const photoUrl = getPhotoUrl(review.photo);
-            const initials = getInitials(review.name);
-            
-            return (
-              <div key={review.id} className={styles.slide}>
-                <div className={styles.card}>
-                  {/* Аватар автора */}
-                  <div className={styles.avatar}>
-                    {photoUrl ? (
-                      <Image
-                        src={photoUrl}
-                        alt={review.name}
-                        width={80}
-                        height={80}
-                        className={styles.avatarImage}
-                      />
-                    ) : (
-                      <div className={styles.avatarFallback}>
-                        {initials}
+    // BEM: Блок reviews-section
+    <section className={styles['reviews-section']}>
+      <div className={styles['reviews-section__container']}>
+        <h2 className={styles['reviews-section__title']}>Отзывы клиентов</h2>
+        
+        {/* BEM: Элемент slider */}
+        <div className={styles['reviews-section__slider']}>
+          <div 
+            className={styles.container}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div 
+              className={styles.track}
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {reviews.map((review) => {
+                const photoUrl = getPhotoUrl(review.photo);
+                const initials = getInitials(review.name);
+                
+                return (
+                  <div key={review.id} className={styles.slide}>
+                    <div className={styles.card}>
+                      {/* Аватар автора */}
+                      <div className={styles.avatar}>
+                        {photoUrl ? (
+                          <Image
+                            src={photoUrl}
+                            alt={review.name}
+                            width={80}
+                            height={80}
+                            className={styles.avatarImage}
+                          />
+                        ) : (
+                          <div className={styles.avatarFallback}>
+                            {initials}
+                          </div>
+                        )}
                       </div>
-                    )}
+                      
+                      <div className={styles.stars}>
+                        {renderStars(review.rating)}
+                      </div>
+                      <p className={styles.text}>"{review.text}"</p>
+                      <p className={styles.author}>— {review.name}</p>
+                    </div>
                   </div>
-                  
-                  <div className={styles.stars}>
-                    {renderStars(review.rating)}
-                  </div>
-                  <p className={styles.text}>"{review.text}"</p>
-                  <p className={styles.author}>— {review.name}</p>
-                </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {reviews.length > 1 && (
+            <>
+              <button 
+                className={`${styles.arrow} ${styles.arrowLeft}`}
+                onClick={goToPrev}
+                aria-label="Previous review"
+              >
+                ‹
+              </button>
+              <button 
+                className={`${styles.arrow} ${styles.arrowRight}`}
+                onClick={goToNext}
+                aria-label="Next review"
+              >
+                ›
+              </button>
+
+              <div className={styles.dots}>
+                {reviews.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.dot} ${index === currentIndex ? styles.dotActive : ''}`}
+                    onClick={() => goToSlide(index)}
+                    aria-label={`Go to review ${index + 1}`}
+                  />
+                ))}
               </div>
-            );
-          })}
+            </>
+          )}
         </div>
       </div>
-
-      {reviews.length > 1 && (
-        <>
-          <button 
-            className={`${styles.arrow} ${styles.arrowLeft}`}
-            onClick={goToPrev}
-            aria-label="Previous review"
-          >
-            ‹
-          </button>
-          <button 
-            className={`${styles.arrow} ${styles.arrowRight}`}
-            onClick={goToNext}
-            aria-label="Next review"
-          >
-            ›
-          </button>
-
-          <div className={styles.dots}>
-            {reviews.map((_, index) => (
-              <button
-                key={index}
-                className={`${styles.dot} ${index === currentIndex ? styles.dotActive : ''}`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to review ${index + 1}`}
-              />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+    </section>
   );
 }

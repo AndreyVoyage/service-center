@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 04.04.2026, 13:45:38
+**Сгенерировано:** 04.04.2026, 17:07:36
 
 ## 📂 Дерево файлов
 
@@ -20,6 +20,7 @@
 │   │   │   ├── launch.json
 │   │   │   └── settings.json
 │   │   ├── docs/
+│   │   │   ├── 14.9 Как сделать аккордеон.pdf
 │   │   │   ├── ЗАГРАН ПАСПОРТ.pdf
 │   │   │   ├── Программист тест.docx
 │   │   │   └── doc-2Анкета в формате pdf.pdf
@@ -30,6 +31,10 @@
 │   │   │   ├── DoA2tffNbDg-1.jpg
 │   │   │   ├── DoA2tffNbDg.jpg
 │   │   │   ├── Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png
+│   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1-1200x655.png
+│   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1-300x200.png
+│   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1-600x400.png
+│   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1.png
 │   │   │   ├── Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png
 │   │   │   ├── iiii-1-300x200.jpg
 │   │   │   ├── iiii-1-600x400.jpg
@@ -57,9 +62,15 @@
 │   │   │   ├── photo_2026-02-18_14-49-55-300x200.jpg
 │   │   │   ├── photo_2026-02-18_14-49-55-600x400.jpg
 │   │   │   ├── photo_2026-02-18_14-49-55.jpg
+│   │   │   ├── photo_2026-02-18_14-49-56-300x200.jpg
+│   │   │   ├── photo_2026-02-18_14-49-56-600x400.jpg
+│   │   │   ├── photo_2026-02-18_14-49-56.jpg
 │   │   │   ├── zzzzzzzzzzzz-1-300x200.jpg
 │   │   │   ├── zzzzzzzzzzzz-1-600x400.jpg
 │   │   │   ├── zzzzzzzzzzzz-1.jpg
+│   │   │   ├── zzzzzzzzzzzz-2-300x200.jpg
+│   │   │   ├── zzzzzzzzzzzz-2-600x400.jpg
+│   │   │   ├── zzzzzzzzzzzz-2.jpg
 │   │   │   └── zzzzzzzzzzzz.jpg
 │   │   ├── src/
 │   │   │   ├── access/
@@ -172,6 +183,8 @@
 │       │   │   └── page.tsx
 │       │   ├── components/
 │       │   │   ├── ContactFormWrapper.tsx
+│       │   │   ├── ContactSection.module.css
+│       │   │   ├── ContactSection.tsx
 │       │   │   ├── Footer.Module.css
 │       │   │   ├── Footer.tsx
 │       │   │   ├── FormBuilder.module.css
@@ -226,8 +239,13 @@
 │           ├── index.ts
 │           └── package.json
 ├── .gitignore
+├── apply-migration.ps1
 ├── check-health.bat
 ├── check-system.ps1
+├── ContactForm.simple.ts
+├── create-database-full.sql
+├── CRITICAL-FIX-APPLIED.md
+├── debug-services.mjs
 ├── docker-compose.yml
 ├── EMERGENCY-RECOVERY.bat
 ├── EMERGENCY-RECOVERY.ps1
@@ -236,7 +254,17 @@
 ├── FAZAONEB.MD
 ├── FAZAONEC.MD
 ├── FINAL-SETUP.md
+├── FIX_DATABASE.md
+├── FIX_MIGRATION.md
+├── FIX_NOW.md
+├── FIX_REVIEWS_DISPLAY.md
+├── FIX_SELECT_OPTIONS.md
+├── FIX_SERVICES_DISPLAY.md
+├── fix-all-manual.sql
+├── fix-db.js
 ├── FIX-MIGRATION-README.md
+├── fix-migration.sql
+├── FIXES_SUMMARY.md
 ├── generate-structure.js
 ├── HERO_CACHE_FIX.md
 ├── HERO_SETUP.md
@@ -247,6 +275,12 @@
 ├── ITERATION_3_CHECKPOINT.md
 ├── ITERATION_4_CHECKPOINT.md
 ├── ITERATION_5_CHECKPOINT.md
+├── launch-with-wait.bat
+├── launch-with-wait.ps1
+├── MANUAL_FIX_GUIDE.md
+├── manual-fix.sql
+├── migrate-select-options.sql
+├── MIGRATION_FIX.sql
 ├── OPTIMIZATION-SUMMARY.md
 ├── Ordrer to Provision Gdansk 13.12.2025.xlsx
 ├── package.json
@@ -257,14 +291,26 @@
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 ├── PROJECT-STATUS.md
+├── QUICKSTART.md
 ├── RECOVERY-GUIDE.md
+├── RESET_MIGRATIONS.md
 ├── restart-and-fix.sh
 ├── restart-dev.sh
+├── run-sql.cmd
+├── SETUP_DATABASE.md
+├── start-and-verify.ps1
 ├── start-optimized.bat
 ├── start-optimized.ps1
+├── STARTUP_GUIDE.md
 ├── tsconfig.json
 ├── turbo.json
 ├── tz.md
+├── UNBLOCK_NOW.bat
+├── VERIFY_SERVICES.md
+├── verify-connection.bat
+├── verify-connection.mjs
+├── verify-select-options.mjs
+├── verify-setup.cjs
 └── warmup.ps1
 ```
 
@@ -287,12 +333,20 @@
 - [docker/README.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/README.md)
 - [packages/config/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/package.json)
 - [packages/ui/src/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/ui/src/package.json)
+- [CRITICAL-FIX-APPLIED.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/CRITICAL-FIX-APPLIED.md)
 - [docker-compose.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker-compose.yml)
 - [FAZAONE.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONE.MD)
 - [FAZAONEB.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONEB.MD)
 - [FAZAONEC.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONEC.MD)
 - [FINAL-SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FINAL-SETUP.md)
+- [FIX_DATABASE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_DATABASE.md)
+- [FIX_MIGRATION.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_MIGRATION.md)
+- [FIX_NOW.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_NOW.md)
+- [FIX_REVIEWS_DISPLAY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_REVIEWS_DISPLAY.md)
+- [FIX_SELECT_OPTIONS.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_SELECT_OPTIONS.md)
+- [FIX_SERVICES_DISPLAY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_SERVICES_DISPLAY.md)
 - [FIX-MIGRATION-README.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX-MIGRATION-README.md)
+- [FIXES_SUMMARY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIXES_SUMMARY.md)
 - [HERO_CACHE_FIX.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/HERO_CACHE_FIX.md)
 - [HERO_SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/HERO_SETUP.md)
 - [ITERATION_0_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_0_CHECKPOINT.md)
@@ -302,12 +356,18 @@
 - [ITERATION_3_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_3_CHECKPOINT.md)
 - [ITERATION_4_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_4_CHECKPOINT.md)
 - [ITERATION_5_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_5_CHECKPOINT.md)
+- [MANUAL_FIX_GUIDE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/MANUAL_FIX_GUIDE.md)
 - [OPTIMIZATION-SUMMARY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/OPTIMIZATION-SUMMARY.md)
 - [package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/package.json)
 - [PHASE_1_FINAL_CHECKLIST.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/PHASE_1_FINAL_CHECKLIST.md)
 - [PROJECT-STATUS.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/PROJECT-STATUS.md)
+- [QUICKSTART.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/QUICKSTART.md)
 - [RECOVERY-GUIDE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/RECOVERY-GUIDE.md)
+- [RESET_MIGRATIONS.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/RESET_MIGRATIONS.md)
+- [SETUP_DATABASE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/SETUP_DATABASE.md)
+- [STARTUP_GUIDE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/STARTUP_GUIDE.md)
 - [tz.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/tz.md)
+- [VERIFY_SERVICES.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/VERIFY_SERVICES.md)
 
 ### ⚙️ Backend / API
 
@@ -380,6 +440,8 @@
 - [apps/web/src/app/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/layout.tsx)
 - [apps/web/src/app/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/page.tsx)
 - [apps/web/src/components/ContactFormWrapper.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ContactFormWrapper.tsx)
+- [apps/web/src/components/ContactSection.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ContactSection.module.css)
+- [apps/web/src/components/ContactSection.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ContactSection.tsx)
 - [apps/web/src/components/Footer.Module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Footer.Module.css)
 - [apps/web/src/components/Footer.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Footer.tsx)
 - [apps/web/src/components/FormBuilder.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/FormBuilder.module.css)
@@ -397,6 +459,13 @@
 ### 🗄️ База данных / Миграции
 
 - [apps/cms/fix-migration.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/fix-migration.sql)
+- [create-database-full.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/create-database-full.sql)
+- [fix-all-manual.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/fix-all-manual.sql)
+- [fix-db.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/fix-db.js)
+- [fix-migration.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/fix-migration.sql)
+- [manual-fix.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/manual-fix.sql)
+- [migrate-select-options.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/migrate-select-options.sql)
+- [MIGRATION_FIX.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/MIGRATION_FIX.sql)
 
 ### 📄 Прочие файлы
 
@@ -435,26 +504,39 @@
 - [packages/config/tsconfig/base.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/tsconfig/base.json)
 - [packages/ui/src/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/ui/src/index.ts)
 - [.gitignore](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/.gitignore)
+- [apply-migration.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apply-migration.ps1)
 - [check-health.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/check-health.bat)
 - [check-system.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/check-system.ps1)
+- [ContactForm.simple.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ContactForm.simple.ts)
+- [debug-services.mjs](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/debug-services.mjs)
 - [EMERGENCY-RECOVERY.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/EMERGENCY-RECOVERY.bat)
 - [EMERGENCY-RECOVERY.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/EMERGENCY-RECOVERY.ps1)
 - [eslint.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/eslint.config.js)
 - [generate-structure.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/generate-structure.js)
+- [launch-with-wait.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/launch-with-wait.bat)
+- [launch-with-wait.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/launch-with-wait.ps1)
 - [perf-test.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/perf-test.ps1)
 - [performance-test.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/performance-test.spec.ts)
 - [pnpm-lock.yaml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/pnpm-lock.yaml)
 - [pnpm-workspace.yaml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/pnpm-workspace.yaml)
 - [restart-and-fix.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/restart-and-fix.sh)
 - [restart-dev.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/restart-dev.sh)
+- [run-sql.cmd](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/run-sql.cmd)
+- [start-and-verify.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/start-and-verify.ps1)
 - [start-optimized.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/start-optimized.bat)
 - [start-optimized.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/start-optimized.ps1)
 - [tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/tsconfig.json)
 - [turbo.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/turbo.json)
+- [UNBLOCK_NOW.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/UNBLOCK_NOW.bat)
+- [verify-connection.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/verify-connection.bat)
+- [verify-connection.mjs](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/verify-connection.mjs)
+- [verify-select-options.mjs](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/verify-select-options.mjs)
+- [verify-setup.cjs](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/verify-setup.cjs)
 - [warmup.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/warmup.ps1)
 
 ### 🔴 Бинарные файлы (пропущены)
 
+- apps/cms/docs/14.9 Как сделать аккордеон.pdf (binary)
 - apps/cms/docs/ЗАГРАН ПАСПОРТ.pdf (binary)
 - apps/cms/docs/Программист тест.docx (binary)
 - apps/cms/media/DoA2tffNbDg-1-1200x900.jpg (binary)
@@ -463,6 +545,10 @@
 - apps/cms/media/DoA2tffNbDg-1.jpg (binary)
 - apps/cms/media/DoA2tffNbDg.jpg (binary)
 - apps/cms/media/Gemini_Generated_Image_9m2qxl9m2qxl9m2q.png (binary)
+- apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1-1200x655.png (binary)
+- apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1-300x200.png (binary)
+- apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1-600x400.png (binary)
+- apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3-1.png (binary)
 - apps/cms/media/Gemini_Generated_Image_wyp3oxwyp3oxwyp3.png (binary)
 - apps/cms/media/iiii-1-300x200.jpg (binary)
 - apps/cms/media/iiii-1-600x400.jpg (binary)
@@ -490,9 +576,15 @@
 - apps/cms/media/photo_2026-02-18_14-49-55-300x200.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-55-600x400.jpg (binary)
 - apps/cms/media/photo_2026-02-18_14-49-55.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-56-300x200.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-56-600x400.jpg (binary)
+- apps/cms/media/photo_2026-02-18_14-49-56.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz-1-300x200.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz-1-600x400.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz-1.jpg (binary)
+- apps/cms/media/zzzzzzzzzzzz-2-300x200.jpg (binary)
+- apps/cms/media/zzzzzzzzzzzz-2-600x400.jpg (binary)
+- apps/cms/media/zzzzzzzzzzzz-2.jpg (binary)
 - apps/cms/media/zzzzzzzzzzzz.jpg (binary)
 - Ordrer to Provision Gdansk 13.12.2025.xlsx (binary)
 - photo_2025-12-18_22-11-47.jpg (binary)

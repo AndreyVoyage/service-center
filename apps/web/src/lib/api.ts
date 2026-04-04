@@ -5,6 +5,50 @@ const API_URL = rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`;
 
 console.log('[API] CMS URL configured:', API_URL);
 
+// Флаг готовности CMS
+let cmsReady = false;
+
+// Ожидание готовности CMS (важно при первом запуске)
+export const waitForCMS = async (maxWait = 60000): Promise<boolean> => {
+  if (cmsReady) return true;
+  
+  console.log('[API] Waiting for CMS to be ready...');
+  const start = Date.now();
+  
+  while (Date.now() - start < maxWait) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
+      const res = await fetch(`${rawUrl}/api/health`, { 
+        signal: controller.signal 
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (res.ok) {
+        cmsReady = true;
+        console.log(`[API] CMS ready after ${Date.now() - start}ms`);
+        return true;
+      }
+    } catch {
+      // Продолжаем ожидание
+    }
+    
+    // Ждём 1 секунду перед следующей попыткой
+    await new Promise(r => setTimeout(r, 1000));
+    
+    // Показываем прогресс каждые 5 секунд
+    const elapsed = Date.now() - start;
+    if (elapsed % 5000 < 1000) {
+      console.log(`[API] Still waiting for CMS... (${Math.round(elapsed / 1000)}s)`);
+    }
+  }
+  
+  console.warn(`[API] CMS not ready after ${maxWait}ms, proceeding anyway`);
+  return false;
+};
+
 // In-memory кэш для SSR (не сохраняется между запросами, но помогает при ретраях)
 const ssrCache = new Map<string, { data: any; timestamp: number }>();
 const SSR_CACHE_TTL = 30000; // 30 секунд
@@ -196,9 +240,21 @@ export interface ContactFormNotifications {
   sendTelegram?: boolean;
 }
 
+export interface ContactFormFeature {
+  icon: 'check' | 'star' | 'shield' | 'clock' | 'phone' | 'tool';
+  text: string;
+}
+
+export interface ContactFormLeftBlock {
+  title?: string;
+  description?: string;
+  features?: ContactFormFeature[];
+}
+
 export interface ContactFormData {
   id?: string | number;
   isActive?: boolean;
+  leftBlock?: ContactFormLeftBlock;
   title?: string;
   subtitle?: string;
   fields?: FormField[];
@@ -215,9 +271,9 @@ export interface FormSubmission {
   equipmentType?: string;
 }
 
-const API_TIMEOUT = 30000; // 30 секунд таймаут (критически увеличили)
-const API_RETRIES = 1; // Только 1 ретрай (меньше нагрузки)
-const RETRY_DELAY = 2000; // 2 секунды между ретраями
+const API_TIMEOUT = 60000; // 60 секунд таймаут (для компиляции CMS)
+const API_RETRIES = 2; // 2 ретрая
+const RETRY_DELAY = 3000; // 3 секунды между ретраями
 
 // Fetch с таймаутом
 async function fetchWithTimeout(

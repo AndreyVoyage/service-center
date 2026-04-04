@@ -13,16 +13,71 @@ export const ContactForm: GlobalConfig = {
       label: 'Форма активна',
       defaultValue: true,
     },
+    // === ЛЕВЫЙ БЛОК: Информация перед формой ===
+    {
+      name: 'leftBlock',
+      type: 'group',
+      label: 'Левый блок (информация)',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Заголовок',
+          defaultValue: 'Оставить заявку',
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Описание',
+          defaultValue: 'Заполните форму, и мы перезвоним вам в течение 15 минут для уточнения деталей и согласования времени выезда мастера.',
+        },
+        {
+          name: 'features',
+          type: 'array',
+          label: 'Преимущества (список)',
+          minRows: 1,
+          maxRows: 6,
+          fields: [
+            {
+              name: 'icon',
+              type: 'select',
+              label: 'Иконка',
+              defaultValue: 'check',
+              options: [
+                { label: '✓ Галочка', value: 'check' },
+                { label: '★ Звезда', value: 'star' },
+                { label: '🛡 Щит', value: 'shield' },
+                { label: '🕐 Часы', value: 'clock' },
+                { label: '📞 Телефон', value: 'phone' },
+                { label: '🔧 Инструмент', value: 'tool' },
+              ],
+            },
+            {
+              name: 'text',
+              type: 'text',
+              label: 'Текст',
+              required: true,
+            },
+          ],
+          defaultValue: [
+            { icon: 'check', text: 'Бесплатная диагностика при ремонте' },
+            { icon: 'check', text: 'Прозрачное ценообразование' },
+            { icon: 'check', text: 'Официальный договор' },
+          ],
+        },
+      ],
+    },
+    // === ПРАВЫЙ БЛОК: Настройки формы ===
     {
       name: 'title',
       type: 'text',
-      label: 'Заголовок формы',
+      label: 'Заголовок формы (над полями)',
       defaultValue: 'Оставить заявку',
     },
     {
       name: 'subtitle',
       type: 'textarea',
-      label: 'Подзаголовок',
+      label: 'Подзаголовок формы',
       defaultValue: 'Заполните форму и мы свяжемся с вами в ближайшее время',
     },
     {

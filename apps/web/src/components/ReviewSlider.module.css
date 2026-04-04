@@ -152,6 +152,47 @@
   color: #6b7280;
 }
 
+/* ============================================
+   BEM Methodology - Reviews Section
+   ============================================ */
+
+/* БЛОК: reviews-section */
+.reviews-section {
+  padding: 80px 0;
+  background-color: #f8f9fa;
+}
+
+/* ЭЛЕМЕНТ: container */
+.reviews-section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ЭЛЕМЕНТ: title */
+.reviews-section__title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 48px;
+  color: #1e293b;
+}
+
+/* ЭЛЕМЕНТ: slider */
+.reviews-section__slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ЭЛЕМЕНТ: empty (fallback) */
+.reviews-section__empty {
+  text-align: center;
+  padding: 48px;
+  color: #6b7280;
+  font-size: 1.125rem;
+}
+
 @media (min-width: 768px) {
   .slide {
     padding: 0 48px;
@@ -163,5 +204,9 @@
 
   .card {
     padding: 32px;
+  }
+  
+  .reviews-section__title {
+    font-size: 2.5rem;
   }
 }

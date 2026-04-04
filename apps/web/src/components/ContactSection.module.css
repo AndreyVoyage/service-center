@@ -1,0 +1,167 @@
+/* ============================================
+   Contact Section - BEM Methodology
+   Block: contact-section
+   ============================================ */
+
+/* БЛОК: contact-section */
+.contact-section {
+  padding: 80px 16px;
+  background: #f8fafc;
+}
+
+/* ЭЛЕМЕНТ: container */
+.contact-section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ============================================
+   ЛЕВЫЙ БЛОК
+   ============================================ */
+
+/* ЭЛЕМЕНТ: left */
+.contact-section__left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ЭЛЕМЕНТ: title */
+.contact-section__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ЭЛЕМЕНТ: description */
+.contact-section__description {
+  font-size: 1.125rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ЭЛЕМЕНТ: features (список) */
+.contact-section__features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ЭЛЕМЕНТ: feature (элемент списка) */
+.contact-section__feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: #374151;
+}
+
+/* ЭЛЕМЕНТ: icon */
+.contact-section__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  font-size: 1.125rem;
+}
+
+/* МОДИФИКАТОРЫ иконок */
+.contact-section__icon--check {
+  color: #22c55e;
+}
+
+.contact-section__icon--star {
+  color: #f59e0b;
+}
+
+.contact-section__icon--shield {
+  color: #3b82f6;
+}
+
+.contact-section__icon--clock {
+  color: #8b5cf6;
+}
+
+.contact-section__icon--phone {
+  color: #ef4444;
+}
+
+.contact-section__icon--tool {
+  color: #6b7280;
+}
+
+/* ЭЛЕМЕНТ: feature-text */
+.contact-section__feature-text {
+  line-height: 1.5;
+}
+
+/* ============================================
+   ПРАВЫЙ БЛОК (ФОРМА)
+   ============================================ */
+
+/* ЭЛЕМЕНТ: right */
+.contact-section__right {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* ЭЛЕМЕНТ: form-wrapper */
+.contact-section__form-wrapper {
+  width: 100%;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+@media (max-width: 968px) {
+  .contact-section {
+    padding: 60px 16px;
+  }
+  
+  .contact-section__container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .contact-section__title {
+    font-size: 1.75rem;
+  }
+  
+  .contact-section__right {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-section {
+    padding: 40px 16px;
+  }
+  
+  .contact-section__title {
+    font-size: 1.5rem;
+  }
+  
+  .contact-section__description {
+    font-size: 1rem;
+  }
+  
+  .contact-section__right {
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
