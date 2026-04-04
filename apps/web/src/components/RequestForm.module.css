@@ -98,3 +98,52 @@
   color: #15803d;
   margin: 0 0 8px 0;
 }
+
+/* Заголовок и подзаголовок формы */
+.formContainer {
+  width: 100%;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #111827;
+}
+
+.formSubtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 24px 0;
+}
+
+/* Чекбокс */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #2563EB;
+}
+
+/* Обязательное поле */
+.required {
+  color: #dc2626;
+}
+
+/* Неактивная форма */
+.inactive {
+  text-align: center;
+  padding: 24px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  color: #6b7280;
+}

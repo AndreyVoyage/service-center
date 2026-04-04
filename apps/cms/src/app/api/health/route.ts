@@ -1,64 +1,73 @@
-// apps/cms/src/app/api/health/route.ts
-// Health check endpoint для Docker и мониторинга
-
 import { NextResponse } from 'next/server'
+import { getPayloadInstance } from '@/lib/payload-singleton'
+import { autoWarmup, isWarmupComplete } from '@/lib/auto-warmup'
+
+// Авто-прогрев при старте
+autoWarmup().catch(console.error)
 
 export const dynamic = 'force-dynamic'
 
-interface HealthStatus {
-  status: 'healthy' | 'unhealthy'
-  timestamp: string
-  version: string
-  services: {
-    database: 'connected' | 'disconnected'
-    api: 'ok' | 'error'
-  }
-  uptime: number
-}
+// In-memory кэш для прогретых данных
+let warmedUpData: any = null
+let warmUpTime = 0
+const WARMUP_TTL = 300000 // 5 минут
 
-export async function GET(): Promise<NextResponse> {
-  const startTime = Date.now()
-
+export async function GET() {
+  const start = Date.now()
+  
   try {
-    // Проверка подключения к БД (если есть глобальный доступ к payload)
-    let dbStatus: 'connected' | 'disconnected' = 'connected'
-
-    try {
-      // Здесь можно добавить реальную проверку БД
-      // const result = await payload.find({ collection: 'users', limit: 1 })
-      dbStatus = 'connected'
-    } catch {
-      dbStatus = 'disconnected'
+    const payload = await getPayloadInstance()
+    
+    // Если данные прогреты и свежие, используем их
+    if (warmedUpData && (Date.now() - warmUpTime) < WARMUP_TTL) {
+      return NextResponse.json({
+        status: 'ok',
+        warmed: true,
+        responseTime: Date.now() - start,
+        timestamp: new Date().toISOString(),
+      })
     }
-
-    const health: HealthStatus = {
-      status: dbStatus === 'connected' ? 'healthy' : 'unhealthy',
+    
+    // Прогрев всех globals (параллельно)
+    const [hero, footer, contactForm] = await Promise.all([
+      payload.findGlobal({ slug: 'hero' }).catch(() => null),
+      payload.findGlobal({ slug: 'footer' }).catch(() => null),
+      payload.findGlobal({ slug: 'contactForm' }).catch(() => null),
+    ])
+    
+    // Прогрев коллекций (параллельно)
+    const [services, reviews] = await Promise.all([
+      payload.find({ collection: 'services', limit: 1 }).catch(() => ({ docs: [] })),
+      payload.find({ collection: 'reviews', limit: 1 }).catch(() => ({ docs: [] })),
+    ])
+    
+    warmedUpData = { hero, footer, contactForm, services, reviews }
+    warmUpTime = Date.now()
+    
+    const totalTime = Date.now() - start
+    
+    return NextResponse.json({
+      status: 'ok',
+      warmed: isWarmupComplete(),
+      warmUpTime: totalTime,
       timestamp: new Date().toISOString(),
-      version: process.env.npm_package_version || '1.0.0',
-      services: {
-        database: dbStatus,
-        api: 'ok',
-      },
-      uptime: process.uptime(),
-    }
-
-    const statusCode = health.status === 'healthy' ? 200 : 503
-
-    return NextResponse.json(health, {
-      status: statusCode,
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'X-Response-Time': `${Date.now() - startTime}ms`,
-      },
+      data: {
+        hero: !!hero,
+        footer: !!footer,
+        contactForm: !!contactForm,
+        servicesCount: services.docs.length,
+        reviewsCount: reviews.docs.length,
+      }
     })
   } catch (error) {
+    console.error('[Health] Error:', error)
     return NextResponse.json(
-      {
-        status: 'unhealthy',
-        timestamp: new Date().toISOString(),
+      { 
+        status: 'error', 
         error: error instanceof Error ? error.message : 'Unknown error',
+        responseTime: Date.now() - start,
       },
-      { status: 503 }
+      { status: 500 }
     )
   }
 }

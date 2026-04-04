@@ -1,14 +1,40 @@
 // apps/web/src/app/page.tsx
 import Link from 'next/link';
-import { getServices, getReviews, getHero, Service, Review, HeroData } from '@/lib/api';
+import { getServices, getReviews, getHero, getFooter, getContactForm, Service, Review, HeroData, FooterData, ContactFormData } from '@/lib/api';
+import { getImageUrl } from '@/lib/api';
 import ServiceCard from '@/components/ServiceCard';
 import ReviewSlider from '@/components/ReviewSlider';
-import RequestForm from '@/components/RequestForm';
+import ContactFormWrapper from '@/components/ContactFormWrapper';
 import styles from './page.module.css';
 
-// Отключаем статическую генерацию и кэширование для dev-режима
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR - статическая генерация с ревалидацией каждые 60 секунд
+export const revalidate = 60;
+
+// Мемоизация для параллельных запросов
+const requestCache = new Map<string, Promise<any>>();
+
+const getMemoized = <T,>(key: string, fetcher: () => Promise<T>): Promise<T> => {
+  if (requestCache.has(key)) {
+    return requestCache.get(key)!;
+  }
+  const promise = fetcher();
+  requestCache.set(key, promise);
+  return promise;
+};
+
+// Fallback Hero данные
+const fallbackHero: HeroData = {
+  isActive: true,
+  title: 'Ремонт промышленных холодильников 24/7',
+  subtitle: 'Срочный выезд мастера в день обращения. Ремонт любой сложности с гарантией до 12 месяцев.',
+  backgroundType: 'color',
+  backgroundColor: 'blue',
+  ctaText: 'Вызвать мастера',
+  ctaLink: '/#form',
+  showSecondaryLink: true,
+  secondaryLinkText: 'Все услуги →',
+  secondaryLinkHref: '/services',
+};
 
 // Helper function to get background class based on color
 function getHeroBackgroundClass(backgroundColor?: string): string {
@@ -23,50 +49,12 @@ function getHeroBackgroundClass(backgroundColor?: string): string {
   }
 }
 
-// Helper function to get background image URL
-function getBackgroundImageUrl(backgroundImage: Media | string | undefined): string | null {
-  if (!backgroundImage) return null;
-  if (typeof backgroundImage === 'string') return backgroundImage;
-  return backgroundImage.url || null;
-}
-
-// Default Hero component when API fails or returns no data
-function DefaultHero() {
-  console.log('[Hero] Rendering DEFAULT hero (API failed or no data)');
-  return (
-    <section className={`${styles.hero} ${styles['hero-bg-blue']}`}>
-      <div className={styles.heroContent}>
-        <h1 className={styles.heroTitle}>
-          Ремонт промышленных холодильников 24/7
-        </h1>
-        <p className={styles.heroSubtitle}>
-          Срочный выезд мастера в день обращения.
-          Ремонт любой сложности с гарантией до 12 месяцев.
-        </p>
-        <div className={styles.heroActions}>
-          <Link href="#form" className={styles.heroButton}>
-            Вызвать мастера
-          </Link>
-          <Link href="/services" className={styles.heroLink}>
-            Все услуги →
-          </Link>
-        </div>
-      </div>
-      <div className={styles.heroDecoration}></div>
-    </section>
-  );
-}
-
 // Dynamic Hero component
-function DynamicHero({ hero }: { hero: HeroData }) {
-  // If hero is inactive, don't render
-  if (!hero.isActive) {
-    console.log('[Hero] Hero is inactive (isActive = false)');
-    return null;
-  }
+function HeroSection({ hero }: { hero: HeroData }) {
+  if (!hero.isActive) return null;
 
-  const backgroundImageUrl = hero.backgroundType === 'image'
-    ? getBackgroundImageUrl(hero.backgroundImage)
+  const backgroundImageUrl = hero.backgroundType === 'image' && hero.backgroundImage
+    ? getImageUrl(hero.backgroundImage, 'full')
     : null;
 
   const backgroundClass = hero.backgroundType === 'color'
@@ -74,36 +62,20 @@ function DynamicHero({ hero }: { hero: HeroData }) {
     : '';
 
   const sectionStyle = backgroundImageUrl
-    ? { backgroundImage: `url(${process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001'}${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    ? { backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
     : undefined;
-
-  console.log('[Hero] Rendering DYNAMIC hero from CMS:', {
-    title: hero.title,
-    backgroundType: hero.backgroundType,
-    backgroundColor: hero.backgroundColor,
-    hasBackgroundImage: !!backgroundImageUrl,
-    isActive: hero.isActive,
-  });
 
   return (
     <section
       className={`${styles.hero} ${backgroundClass}`}
       style={sectionStyle}
     >
-      {/* Индикатор CMS Connected (только для отладки) */}
-      <div className={styles.cmsIndicator} title="Данные загружены из CMS">
-        <span className={styles.cmsIndicatorDot}></span>
-        CMS Connected
-      </div>
-
       <div className={styles.heroContent}>
         <h1 className={styles.heroTitle}>
-          {hero.title || 'Ремонт промышленных холодильников 24/7'}
+          {hero.title || fallbackHero.title}
         </h1>
         {hero.subtitle && (
-          <p className={styles.heroSubtitle}>
-            {hero.subtitle}
-          </p>
+          <p className={styles.heroSubtitle}>{hero.subtitle}</p>
         )}
         <div className={styles.heroActions}>
           <Link href={hero.ctaLink || '#form'} className={styles.heroButton}>
@@ -122,46 +94,18 @@ function DynamicHero({ hero }: { hero: HeroData }) {
 }
 
 export default async function Home() {
-  console.log('\n========== PAGE RENDER START ==========');
-  console.log('[Page] Fetching data from CMS...');
-  console.log('[Page] CMS URL:', process.env.NEXT_PUBLIC_CMS_URL || 'http://localhost:3001');
+  // Параллельная загрузка всех данных с мемоизацией
+  const [servicesData, reviewsData, heroData, footerData, contactFormData] = await Promise.all([
+    getMemoized('services', () => getServices().catch(() => ({ docs: [] }))),
+    getMemoized('reviews', () => getReviews().catch(() => ({ docs: [] }))),
+    getMemoized('hero', () => getHero().catch(() => fallbackHero)),
+    getMemoized('footer', () => getFooter().catch(() => null)),
+    getMemoized('contactForm', () => getContactForm().catch(() => null)),
+  ]);
 
-  let services: Service[] = [];
-  let reviews: Review[] = [];
-  let hero: HeroData | null = null;
-
-  try {
-    const servicesData = await getServices();
-    services = servicesData.docs.slice(0, 6);
-    console.log(`[Page] Loaded ${services.length} services`);
-  } catch (error) {
-    console.error('[Page] Failed to fetch services:', error);
-  }
-
-  try {
-    const reviewsData = await getReviews();
-    reviews = reviewsData.docs;
-    console.log(`[Page] Loaded ${reviews.length} reviews`);
-  } catch (error) {
-    console.error('[Page] Failed to fetch reviews:', error);
-  }
-
-  try {
-    hero = await getHero();
-    console.log('[Page] Hero data loaded:', hero ? 'SUCCESS' : 'NULL');
-    if (hero) {
-      console.log('[Page] Hero details:', {
-        title: hero.title,
-        isActive: hero.isActive,
-        backgroundType: hero.backgroundType,
-        backgroundColor: hero.backgroundColor,
-      });
-    }
-  } catch (error) {
-    console.error('[Page] Failed to fetch hero:', error);
-  }
-
-  console.log('========== PAGE RENDER END ==========\n');
+  const services = servicesData.docs.slice(0, 6);
+  const reviews = reviewsData.docs;
+  const hero = heroData || fallbackHero;
 
   const equipmentTypes = [
     'Промышленный холодильник',
@@ -174,8 +118,8 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero Section - Dynamic from CMS */}
-      {hero ? <DynamicHero hero={hero} /> : <DefaultHero />}
+      {/* Hero Section */}
+      <HeroSection hero={hero} />
 
       {/* Services Section */}
       <section className="section" id="services">
@@ -261,7 +205,7 @@ export default async function Home() {
               </ul>
             </div>
             <div className={styles.formWrapper}>
-              <RequestForm equipmentTypes={equipmentTypes} />
+              <ContactFormWrapper equipmentTypes={equipmentTypes} />
             </div>
           </div>
         </div>

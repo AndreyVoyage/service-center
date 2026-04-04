@@ -1,15 +1,17 @@
 /* apps/cms/src/blocks/index.ts */
 
-// ✅ Сначала импортируем
+// ✅ Импорты
 import { Hero } from './Hero'
 import { ServicesGrid } from './ServicesGrid'
+import { ReviewsSlider } from './ReviewsSlider'
+import { FormBuilder } from './FormBuilder'
 import { Block } from 'payload'
-import { ReviewsSlider } from './ReviewsSlider' 
 
-// ✅ Потом экспортируем
+// ✅ Экспорты
 export { Hero }
 export { ServicesGrid }
-export { ReviewsSlider } from './ReviewsSlider'
+export { ReviewsSlider }
+export { FormBuilder }
 
-// ✅ Используем
-export const pageBlocks: Block[] = [Hero, ServicesGrid, ReviewsSlider]
+// ✅ Массив блоков для страниц
+export const pageBlocks: Block[] = [Hero, ServicesGrid, ReviewsSlider, FormBuilder]

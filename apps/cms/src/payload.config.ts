@@ -14,11 +14,11 @@ import { ServiceFieldDefinitions } from './collections/ServiceFieldDefinitions'
 import { Notifications } from './globals/Notifications'
 import { Hero } from './globals/Hero'
 import { ThemeSettings } from './globals/ThemeSettings'
+import { Footer } from './globals/Footer'
+import { ContactForm } from './globals/ContactForm'
 
 import sharp from 'sharp'
 import path from 'path'
-
-console.log('>>> LOADING payload.config.ts')
 
 const config = buildConfig({
   secret: process.env.PAYLOAD_SECRET!,
@@ -29,15 +29,27 @@ const config = buildConfig({
     },
   },
   collections: [Users, Page, Categories, Service, Media, Documents, Review, FormSubmission, Navigation, ServiceFieldDefinitions],
-  globals: [Notifications, Hero, ThemeSettings],
+  globals: [Notifications, Hero, ThemeSettings, Footer, ContactForm],
   sharp,
   editor: lexicalEditor({}),
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URI! }
+    pool: { 
+      connectionString: process.env.DATABASE_URI!,
+      // Минимальные настройки для экономии памяти
+      max: 5,  // Максимум 5 соединений
+      min: 1,  // Минимум 1 соединение
+      acquireTimeoutMillis: 5000,
+      createTimeoutMillis: 5000,
+      idleTimeoutMillis: 10000,
+    },
+    // Отключаем auto-push
+    push: false,
   }),
-  typescript: { outputFile: './src/payload-types.ts' }
+  typescript: { 
+    outputFile: './src/payload-types.ts',
+    // Отключаем строгую проверку
+    declare: { noEmit: false }
+  }
 })
-
-console.log('>>> CONFIG CREATED:', typeof config)
 
 export default config

@@ -2,7 +2,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, TouchEvent } from 'react';
-import { Review } from '@/lib/api';
+import Image from 'next/image';
+import { Review, Media, getImageUrl } from '@/lib/api';
 import styles from './ReviewSlider.module.css';
 
 interface ReviewSliderProps {
@@ -62,6 +63,24 @@ export default function ReviewSlider({ reviews }: ReviewSliderProps) {
     ));
   };
 
+  // Получить инициалы из имени
+  const getInitials = (name: string): string => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  // Получить URL фото автора
+  const getPhotoUrl = (photo: number | Media | undefined | null): string | null => {
+    if (!photo) return null;
+    if (typeof photo === 'number') return null;
+    // Используем thumbnail для аватара (80x80)
+    return getImageUrl(photo, 'thumbnail');
+  };
+
   if (reviews.length === 0) {
     return (
       <div className={styles.empty}>
@@ -82,17 +101,39 @@ export default function ReviewSlider({ reviews }: ReviewSliderProps) {
           className={styles.track}
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {reviews.map((review) => (
-            <div key={review.id} className={styles.slide}>
-              <div className={styles.card}>
-                <div className={styles.stars}>
-                  {renderStars(review.rating)}
+          {reviews.map((review) => {
+            const photoUrl = getPhotoUrl(review.photo);
+            const initials = getInitials(review.name);
+            
+            return (
+              <div key={review.id} className={styles.slide}>
+                <div className={styles.card}>
+                  {/* Аватар автора */}
+                  <div className={styles.avatar}>
+                    {photoUrl ? (
+                      <Image
+                        src={photoUrl}
+                        alt={review.name}
+                        width={80}
+                        height={80}
+                        className={styles.avatarImage}
+                      />
+                    ) : (
+                      <div className={styles.avatarFallback}>
+                        {initials}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className={styles.stars}>
+                    {renderStars(review.rating)}
+                  </div>
+                  <p className={styles.text}>"{review.text}"</p>
+                  <p className={styles.author}>— {review.name}</p>
                 </div>
-                <p className={styles.text}>"{review.text}"</p>
-                <p className={styles.author}>— {review.name}</p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

@@ -7,6 +7,31 @@
  */
 
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormField".
+ */
+export type FormField =
+  | {
+      fieldType: 'text' | 'phone' | 'email' | 'message' | 'select' | 'checkbox';
+      /**
+       * Техническое имя поля, используется в коде
+       */
+      name: string;
+      label: string;
+      placeholder?: string | null;
+      required?: boolean | null;
+      options?:
+        | {
+            value: string;
+            label: string;
+            id?: string | null;
+          }[]
+        | null;
+      order?: number | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -104,11 +129,15 @@ export interface Config {
     notifications: Notification;
     hero: Hero;
     'theme-settings': ThemeSetting;
+    footer: Footer;
+    contactForm: ContactForm;
   };
   globalsSelect: {
     notifications: NotificationsSelect<false> | NotificationsSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     'theme-settings': ThemeSettingsSelect<false> | ThemeSettingsSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    contactForm: ContactFormSelect<false> | ContactFormSelect<true>;
   };
   locale: null;
   user: User & {
@@ -211,6 +240,72 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'reviewsSlider';
+          }
+        | {
+            title?: string | null;
+            subtitle?: string | null;
+            submitButtonText?: string | null;
+            successMessage?: string | null;
+            /**
+             * Перетащите поля для изменения порядка. Используйте переключатель для включения/выключения.
+             */
+            fields?:
+              | {
+                  fieldType: 'name' | 'phone' | 'email' | 'message' | 'custom';
+                  isEnabled?: boolean | null;
+                  isRequired?: boolean | null;
+                  label: string;
+                  placeholder?: string | null;
+                  defaultValue?: string | null;
+                  validation?: {
+                    minLength?: number | null;
+                    maxLength?: number | null;
+                    /**
+                     * Например: ^[+]?[0-9\s\-\(\)]+$ для телефона
+                     */
+                    pattern?: string | null;
+                    errorMessage?: string | null;
+                  };
+                  width?: ('full' | 'half' | 'third') | null;
+                  customType?: ('text' | 'number' | 'date' | 'select' | 'checkbox' | 'textarea') | null;
+                  options?:
+                    | {
+                        label: string;
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            notifications?: {
+              emailRecipients?:
+                | {
+                    email: string;
+                    id?: string | null;
+                  }[]
+                | null;
+              sendToTelegram?: boolean | null;
+              /**
+               * ID чата или @username канала
+               */
+              telegramChatId?: string | null;
+              /**
+               * Используйте {{fieldName}} для подстановки значений
+               */
+              telegramTemplate?: string | null;
+              saveToDatabase?: boolean | null;
+            };
+            spamProtection?: {
+              /**
+               * Название скрытого поля. Если бот заполнит — форма отклонится.
+               */
+              honeypot?: string | null;
+              recaptcha?: boolean | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBuilder';
           }
       )[]
     | null;
@@ -340,8 +435,16 @@ export interface Review {
  */
 export interface FormSubmission {
   id: number;
-  formType: 'repair' | 'diagnostics' | 'cooperation';
-  data:
+  formType: 'repair' | 'diagnostics' | 'cooperation' | 'formBuilder';
+  /**
+   * Страница, с которой отправлена форма
+   */
+  sourcePage?: (number | null) | Page;
+  /**
+   * ID блока формы
+   */
+  sourceBlockId?: string | null;
+  formData:
     | {
         [k: string]: unknown;
       }
@@ -350,6 +453,16 @@ export interface FormSubmission {
     | number
     | boolean
     | null;
+  metadata?: {
+    ipAddress?: string | null;
+    userAgent?: string | null;
+    submittedAt?: string | null;
+  };
+  status?: ('new' | 'processing' | 'processed' | 'archived') | null;
+  /**
+   * Внутние заметки по заявке
+   */
+  notes?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -552,6 +665,64 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        formBuilder?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              submitButtonText?: T;
+              successMessage?: T;
+              fields?:
+                | T
+                | {
+                    fieldType?: T;
+                    isEnabled?: T;
+                    isRequired?: T;
+                    label?: T;
+                    placeholder?: T;
+                    defaultValue?: T;
+                    validation?:
+                      | T
+                      | {
+                          minLength?: T;
+                          maxLength?: T;
+                          pattern?: T;
+                          errorMessage?: T;
+                        };
+                    width?: T;
+                    customType?: T;
+                    options?:
+                      | T
+                      | {
+                          label?: T;
+                          value?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              notifications?:
+                | T
+                | {
+                    emailRecipients?:
+                      | T
+                      | {
+                          email?: T;
+                          id?: T;
+                        };
+                    sendToTelegram?: T;
+                    telegramChatId?: T;
+                    telegramTemplate?: T;
+                    saveToDatabase?: T;
+                  };
+              spamProtection?:
+                | T
+                | {
+                    honeypot?: T;
+                    recaptcha?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -682,7 +853,18 @@ export interface ReviewsSelect<T extends boolean = true> {
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
   formType?: T;
-  data?: T;
+  sourcePage?: T;
+  sourceBlockId?: T;
+  formData?: T;
+  metadata?:
+    | T
+    | {
+        ipAddress?: T;
+        userAgent?: T;
+        submittedAt?: T;
+      };
+  status?: T;
+  notes?: T;
   createdAt?: T;
   updatedAt?: T;
 }
@@ -812,6 +994,77 @@ export interface ThemeSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo?: (number | null) | Media;
+  companyName?: string | null;
+  description?: string | null;
+  contacts?: {
+    email?: string | null;
+    phone?: string | null;
+    address?: string | null;
+  };
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'instagram' | 'telegram' | 'whatsapp' | 'vk' | 'youtube';
+        url: string;
+        isActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  navigationColumns?:
+    | {
+        title?: string | null;
+        links?:
+          | {
+              label: string;
+              href: string;
+              isActive?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyright?: string | null;
+  showLegalLinks?: boolean | null;
+  legalLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactForm".
+ */
+export interface ContactForm {
+  id: number;
+  isActive?: boolean | null;
+  title?: string | null;
+  subtitle?: string | null;
+  fields?: FormField;
+  submitButtonText?: string | null;
+  successMessage?: string | null;
+  notifications?: {
+    email?: string | null;
+    /**
+     * ID чата для отправки уведомлений в Telegram (опционально)
+     */
+    telegramChatId?: string | null;
+    sendTelegram?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications_select".
  */
 export interface NotificationsSelect<T extends boolean = true> {
@@ -879,6 +1132,98 @@ export interface ThemeSettingsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  companyName?: T;
+  description?: T;
+  contacts?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        address?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        isActive?: T;
+        id?: T;
+      };
+  navigationColumns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              isActive?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  copyright?: T;
+  showLegalLinks?: T;
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactForm_select".
+ */
+export interface ContactFormSelect<T extends boolean = true> {
+  isActive?: T;
+  title?: T;
+  subtitle?: T;
+  fields?: T | FormFieldSelect<T>;
+  submitButtonText?: T;
+  successMessage?: T;
+  notifications?:
+    | T
+    | {
+        email?: T;
+        telegramChatId?: T;
+        sendTelegram?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormField_select".
+ */
+export interface FormFieldSelect<T extends boolean = true> {
+  fieldType?: T;
+  name?: T;
+  label?: T;
+  placeholder?: T;
+  required?: T;
+  options?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  order?: T;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

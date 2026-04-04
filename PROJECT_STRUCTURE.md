@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 03.04.2026, 21:32:11
+**Сгенерировано:** 04.04.2026, 13:45:38
 
 ## 📂 Дерево файлов
 
@@ -93,6 +93,7 @@
 │   │   │   │   └── my-route/
 │   │   │   │       └── route.ts
 │   │   │   ├── blocks/
+│   │   │   │   ├── FormBuilder.ts
 │   │   │   │   ├── Hero.ts
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── ReviewsSlider.ts
@@ -110,13 +111,18 @@
 │   │   │   │   ├── Services.ts
 │   │   │   │   └── Users.ts
 │   │   │   ├── components/
-│   │   │   │   └── ExportCSV.tsx
+│   │   │   │   ├── ExportCSV.tsx
+│   │   │   │   └── FormFieldRowLabel.tsx
 │   │   │   ├── globals/
+│   │   │   │   ├── ContactForm.ts
+│   │   │   │   ├── Footer.ts
 │   │   │   │   ├── Hero.ts
 │   │   │   │   ├── Notifications.ts
 │   │   │   │   └── ThemeSettings.ts
 │   │   │   ├── lib/
+│   │   │   │   ├── auto-warmup.ts
 │   │   │   │   ├── notifyManagers.ts
+│   │   │   │   ├── payload-singleton.ts
 │   │   │   │   ├── sites.ts
 │   │   │   │   └── telegram.ts
 │   │   │   ├── middleware.ts
@@ -136,6 +142,8 @@
 │   │   ├── Dockerfile
 │   │   ├── Dockerfile.prod
 │   │   ├── eslint.config.mjs
+│   │   ├── fix-migration.sql
+│   │   ├── migrate-fix.js
 │   │   ├── next-env.d.ts
 │   │   ├── next.config.mjs
 │   │   ├── package.json
@@ -163,8 +171,11 @@
 │       │   │   ├── page.module.css
 │       │   │   └── page.tsx
 │       │   ├── components/
+│       │   │   ├── ContactFormWrapper.tsx
 │       │   │   ├── Footer.Module.css
 │       │   │   ├── Footer.tsx
+│       │   │   ├── FormBuilder.module.css
+│       │   │   ├── FormBuilder.tsx
 │       │   │   ├── Header.module.css
 │       │   │   ├── Header.tsx
 │       │   │   ├── Hero.tsx
@@ -175,8 +186,10 @@
 │       │   │   ├── ServiceCard.module.css
 │       │   │   └── ServiceCard.tsx
 │       │   └── lib/
+│       │       ├── api.test.ts
 │       │       ├── api.ts
-│       │       └── check-hero.ts
+│       │       ├── check-hero.ts
+│       │       └── fallback-data.ts
 │       ├── .env.local.txt
 │       ├── .env.txt
 │       ├── Dockerfile.prod
@@ -213,11 +226,17 @@
 │           ├── index.ts
 │           └── package.json
 ├── .gitignore
+├── check-health.bat
+├── check-system.ps1
 ├── docker-compose.yml
+├── EMERGENCY-RECOVERY.bat
+├── EMERGENCY-RECOVERY.ps1
 ├── eslint.config.js
 ├── FAZAONE.MD
 ├── FAZAONEB.MD
 ├── FAZAONEC.MD
+├── FINAL-SETUP.md
+├── FIX-MIGRATION-README.md
 ├── generate-structure.js
 ├── HERO_CACHE_FIX.md
 ├── HERO_SETUP.md
@@ -228,15 +247,25 @@
 ├── ITERATION_3_CHECKPOINT.md
 ├── ITERATION_4_CHECKPOINT.md
 ├── ITERATION_5_CHECKPOINT.md
+├── OPTIMIZATION-SUMMARY.md
 ├── Ordrer to Provision Gdansk 13.12.2025.xlsx
 ├── package.json
+├── perf-test.ps1
+├── performance-test.spec.ts
 ├── PHASE_1_FINAL_CHECKLIST.md
 ├── photo_2025-12-18_22-11-47.jpg
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
+├── PROJECT-STATUS.md
+├── RECOVERY-GUIDE.md
+├── restart-and-fix.sh
+├── restart-dev.sh
+├── start-optimized.bat
+├── start-optimized.ps1
 ├── tsconfig.json
 ├── turbo.json
-└── tz.md
+├── tz.md
+└── warmup.ps1
 ```
 
 ## 🔗 Raw-ссылки для AI-анализа
@@ -262,6 +291,8 @@
 - [FAZAONE.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONE.MD)
 - [FAZAONEB.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONEB.MD)
 - [FAZAONEC.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONEC.MD)
+- [FINAL-SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FINAL-SETUP.md)
+- [FIX-MIGRATION-README.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX-MIGRATION-README.md)
 - [HERO_CACHE_FIX.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/HERO_CACHE_FIX.md)
 - [HERO_SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/HERO_SETUP.md)
 - [ITERATION_0_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_0_CHECKPOINT.md)
@@ -271,8 +302,11 @@
 - [ITERATION_3_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_3_CHECKPOINT.md)
 - [ITERATION_4_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_4_CHECKPOINT.md)
 - [ITERATION_5_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_5_CHECKPOINT.md)
+- [OPTIMIZATION-SUMMARY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/OPTIMIZATION-SUMMARY.md)
 - [package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/package.json)
 - [PHASE_1_FINAL_CHECKLIST.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/PHASE_1_FINAL_CHECKLIST.md)
+- [PROJECT-STATUS.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/PROJECT-STATUS.md)
+- [RECOVERY-GUIDE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/RECOVERY-GUIDE.md)
 - [tz.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/tz.md)
 
 ### ⚙️ Backend / API
@@ -287,6 +321,7 @@
 - [apps/cms/src/app/(payload)/api/graphql-playground/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/api/graphql-playground/route.ts)
 - [apps/cms/src/app/api/health/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/api/health/route.ts)
 - [apps/cms/src/app/my-route/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/my-route/route.ts)
+- [apps/cms/src/blocks/FormBuilder.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/blocks/FormBuilder.ts)
 - [apps/cms/src/blocks/Hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/blocks/Hero.ts)
 - [apps/cms/src/blocks/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/blocks/index.ts)
 - [apps/cms/src/blocks/ReviewsSlider.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/blocks/ReviewsSlider.ts)
@@ -302,10 +337,14 @@
 - [apps/cms/src/collections/ServiceFieldDefinitions.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/collections/ServiceFieldDefinitions.ts)
 - [apps/cms/src/collections/Services.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/collections/Services.ts)
 - [apps/cms/src/collections/Users.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/collections/Users.ts)
+- [apps/cms/src/globals/ContactForm.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/ContactForm.ts)
+- [apps/cms/src/globals/Footer.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/Footer.ts)
 - [apps/cms/src/globals/Hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/Hero.ts)
 - [apps/cms/src/globals/Notifications.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/Notifications.ts)
 - [apps/cms/src/globals/ThemeSettings.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/globals/ThemeSettings.ts)
+- [apps/cms/src/lib/auto-warmup.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/auto-warmup.ts)
 - [apps/cms/src/lib/notifyManagers.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/notifyManagers.ts)
+- [apps/cms/src/lib/payload-singleton.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/payload-singleton.ts)
 - [apps/cms/src/lib/sites.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/sites.ts)
 - [apps/cms/src/lib/telegram.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/lib/telegram.ts)
 - [apps/cms/src/middleware.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/middleware.ts)
@@ -313,12 +352,15 @@
 - [apps/cms/src/payload.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/payload.config.ts)
 - [apps/cms/tests/e2e/frontend.e2e.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/tests/e2e/frontend.e2e.spec.ts)
 - [apps/cms/tests/int/api.int.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/tests/int/api.int.spec.ts)
+- [apps/cms/migrate-fix.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/migrate-fix.js)
 - [apps/cms/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/next-env.d.ts)
 - [apps/cms/playwright.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/playwright.config.ts)
 - [apps/cms/vitest.setup.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/vitest.setup.ts)
 - [apps/web/src/app/api/health/route.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/api/health/route.ts)
+- [apps/web/src/lib/api.test.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/api.test.ts)
 - [apps/web/src/lib/api.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/api.ts)
 - [apps/web/src/lib/check-hero.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/check-hero.ts)
+- [apps/web/src/lib/fallback-data.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/fallback-data.ts)
 - [apps/web/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/next-env.d.ts)
 - [apps/web/next.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/next.config.js)
 
@@ -331,13 +373,17 @@
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx)
 - [apps/cms/src/app/(payload)/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/layout.tsx)
 - [apps/cms/src/components/ExportCSV.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/ExportCSV.tsx)
+- [apps/cms/src/components/FormFieldRowLabel.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/FormFieldRowLabel.tsx)
 - [apps/web/src/app/services/[slug]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/[slug]/page.tsx)
 - [apps/web/src/app/services/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/page.tsx)
 - [apps/web/src/app/services/ServicesClient.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/ServicesClient.tsx)
 - [apps/web/src/app/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/layout.tsx)
 - [apps/web/src/app/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/page.tsx)
+- [apps/web/src/components/ContactFormWrapper.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ContactFormWrapper.tsx)
 - [apps/web/src/components/Footer.Module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Footer.Module.css)
 - [apps/web/src/components/Footer.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Footer.tsx)
+- [apps/web/src/components/FormBuilder.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/FormBuilder.module.css)
+- [apps/web/src/components/FormBuilder.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/FormBuilder.tsx)
 - [apps/web/src/components/Header.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Header.module.css)
 - [apps/web/src/components/Header.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Header.tsx)
 - [apps/web/src/components/Hero.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/Hero.tsx)
@@ -347,6 +393,10 @@
 - [apps/web/src/components/ReviewSlider.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ReviewSlider.tsx)
 - [apps/web/src/components/ServiceCard.module.css](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ServiceCard.module.css)
 - [apps/web/src/components/ServiceCard.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/components/ServiceCard.tsx)
+
+### 🗄️ База данных / Миграции
+
+- [apps/cms/fix-migration.sql](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/fix-migration.sql)
 
 ### 📄 Прочие файлы
 
@@ -385,12 +435,23 @@
 - [packages/config/tsconfig/base.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/tsconfig/base.json)
 - [packages/ui/src/index.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/ui/src/index.ts)
 - [.gitignore](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/.gitignore)
+- [check-health.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/check-health.bat)
+- [check-system.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/check-system.ps1)
+- [EMERGENCY-RECOVERY.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/EMERGENCY-RECOVERY.bat)
+- [EMERGENCY-RECOVERY.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/EMERGENCY-RECOVERY.ps1)
 - [eslint.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/eslint.config.js)
 - [generate-structure.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/generate-structure.js)
+- [perf-test.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/perf-test.ps1)
+- [performance-test.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/performance-test.spec.ts)
 - [pnpm-lock.yaml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/pnpm-lock.yaml)
 - [pnpm-workspace.yaml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/pnpm-workspace.yaml)
+- [restart-and-fix.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/restart-and-fix.sh)
+- [restart-dev.sh](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/restart-dev.sh)
+- [start-optimized.bat](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/start-optimized.bat)
+- [start-optimized.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/start-optimized.ps1)
 - [tsconfig.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/tsconfig.json)
 - [turbo.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/turbo.json)
+- [warmup.ps1](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/warmup.ps1)
 
 ### 🔴 Бинарные файлы (пропущены)
 

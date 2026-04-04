@@ -76,6 +76,50 @@
   font-size: 0.875rem;
 }
 
+/* Социальные ссылки */
+.socialLinks {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.socialLink {
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.socialLink:hover {
+  transform: scale(1.1);
+}
+
+/* Логотип */
+.logo {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Юридические ссылки */
+.legalLinks {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.legalLink {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.legalLink:hover {
+  color: #2563EB;
+}
+
 @media (min-width: 768px) {
   .footer {
     padding: 48px 24px 24px;
