@@ -97,7 +97,8 @@ export const ContactForm: GlobalConfig = {
             { label: 'Телефон', value: 'phone' },
             { label: 'Email', value: 'email' },
             { label: 'Сообщение', value: 'message' },
-            { label: 'Список', value: 'select' },
+            { label: 'Список (ручные опции)', value: 'select' },
+            { label: 'Выбор категории (авто)', value: 'categorySelect' },
             { label: 'Чекбокс', value: 'checkbox' },
           ],
         },
@@ -132,7 +133,8 @@ export const ContactForm: GlobalConfig = {
           type: 'array',
           label: 'Опции (для выпадающего списка)',
           admin: {
-            condition: (data) => data.fieldType === 'select',
+            condition: (data, siblingData) => siblingData?.fieldType === 'select',
+            description: 'Добавьте опции для выпадающего списка',
           },
           fields: [
             {
@@ -148,6 +150,17 @@ export const ContactForm: GlobalConfig = {
               required: true,
             },
           ],
+        },
+        {
+          name: 'categoryInfo',
+          type: 'ui',
+          label: 'Информация',
+          admin: {
+            condition: (data, siblingData) => siblingData?.fieldType === 'categorySelect',
+            components: {
+              Field: 'CategorySelectInfo_8df305977c47b24ddea94b6b84255b20',
+            },
+          },
         },
         {
           name: 'order',

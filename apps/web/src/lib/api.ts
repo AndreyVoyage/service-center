@@ -225,7 +225,7 @@ export interface FormFieldOption {
 }
 
 export interface FormField {
-  fieldType: 'name' | 'phone' | 'email' | 'message' | 'select' | 'checkbox';
+  fieldType: 'name' | 'phone' | 'email' | 'message' | 'select' | 'categorySelect' | 'checkbox';
   name: string;
   label: string;
   placeholder?: string;
@@ -268,7 +268,7 @@ export interface FormSubmission {
   phone: string;
   message?: string;
   service?: string;
-  equipmentType?: string;
+  category?: string; // Для полей типа categorySelect
 }
 
 const API_TIMEOUT = 60000; // 60 секунд таймаут (для компиляции CMS)

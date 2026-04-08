@@ -6,7 +6,6 @@ import styles from './ContactSection.module.css';
 
 interface ContactSectionProps {
   data: ContactFormData;
-  equipmentTypes?: string[];
 }
 
 // Маппинг иконок
@@ -30,17 +29,7 @@ const defaultLeftBlock = {
   ],
 };
 
-// Fallback для equipmentTypes
-const defaultEquipmentTypes = [
-  'Промышленный холодильник',
-  'Морозильная камера',
-  'Холодильная витрина',
-  'Ларь морозильный',
-  'Кондитерский шкаф',
-  'Холодильный агрегат',
-];
-
-export default function ContactSection({ data, equipmentTypes = defaultEquipmentTypes }: ContactSectionProps) {
+export default function ContactSection({ data }: ContactSectionProps) {
   // Используем leftBlock из CMS или fallback
   const leftBlock = data.leftBlock || defaultLeftBlock;
   
@@ -94,7 +83,7 @@ export default function ContactSection({ data, equipmentTypes = defaultEquipment
         <div className={styles['contact-section__right']}>
           {/* BEM: Элемент form-wrapper */}
           <div className={styles['contact-section__form-wrapper']}>
-            <RequestForm cmsConfig={data} equipmentTypes={equipmentTypes} />
+            <RequestForm cmsConfig={data} />
           </div>
         </div>
         

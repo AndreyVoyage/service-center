@@ -12,7 +12,7 @@
  */
 export type FormField =
   | {
-      fieldType: 'text' | 'phone' | 'email' | 'message' | 'select' | 'checkbox';
+      fieldType: 'text' | 'phone' | 'email' | 'message' | 'select' | 'categorySelect' | 'checkbox';
       /**
        * Техническое имя поля, используется в коде
        */
@@ -20,6 +20,9 @@ export type FormField =
       label: string;
       placeholder?: string | null;
       required?: boolean | null;
+      /**
+       * Добавьте опции для выпадающего списка
+       */
       options?:
         | {
             value: string;

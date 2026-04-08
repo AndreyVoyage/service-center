@@ -2,7 +2,7 @@
 
 **Репозиторий:** https://github.com/AndreyVoyage/service-center  
 **Ветка:** `fix/local-errors`  
-**Сгенерировано:** 04.04.2026, 17:07:36
+**Сгенерировано:** 08.04.2026, 21:38:33
 
 ## 📂 Дерево файлов
 
@@ -122,6 +122,7 @@
 │   │   │   │   ├── Services.ts
 │   │   │   │   └── Users.ts
 │   │   │   ├── components/
+│   │   │   │   ├── CategorySelectInfo.tsx
 │   │   │   │   ├── ExportCSV.tsx
 │   │   │   │   └── FormFieldRowLabel.tsx
 │   │   │   ├── globals/
@@ -143,6 +144,7 @@
 │   │   │   ├── e2e/
 │   │   │   │   └── frontend.e2e.spec.ts
 │   │   │   └── int/
+│   │   │       ├── api.categories.spec.ts
 │   │   │       └── api.int.spec.ts
 │   │   ├── .env.example
 │   │   ├── .gitignore
@@ -209,6 +211,7 @@
 │       ├── next-env.d.ts
 │       ├── next.config.js
 │       ├── package.json
+│       ├── test-request-form.spec.ts
 │       └── tsconfig.json
 ├── docker/
 │   ├── nginx/
@@ -244,6 +247,7 @@
 ├── check-system.ps1
 ├── ContactForm.simple.ts
 ├── create-database-full.sql
+├── CRITICAL_FIXES_APPLIED.md
 ├── CRITICAL-FIX-APPLIED.md
 ├── debug-services.mjs
 ├── docker-compose.yml
@@ -255,6 +259,7 @@
 ├── FAZAONEC.MD
 ├── FINAL-SETUP.md
 ├── FIX_DATABASE.md
+├── FIX_IMPORTMAP.md
 ├── FIX_MIGRATION.md
 ├── FIX_NOW.md
 ├── FIX_REVIEWS_DISPLAY.md
@@ -268,6 +273,8 @@
 ├── generate-structure.js
 ├── HERO_CACHE_FIX.md
 ├── HERO_SETUP.md
+├── IMPLEMENTATION_SUMMARY.md
+├── INTEGRATION_CATEGORIES.md
 ├── ITERATION_0_CHECKPOINT.md
 ├── ITERATION_1_CHECKPOINT.md
 ├── ITERATION_2A_CHECKPOINT.md
@@ -333,6 +340,7 @@
 - [docker/README.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker/README.md)
 - [packages/config/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/config/package.json)
 - [packages/ui/src/package.json](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/packages/ui/src/package.json)
+- [CRITICAL_FIXES_APPLIED.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/CRITICAL_FIXES_APPLIED.md)
 - [CRITICAL-FIX-APPLIED.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/CRITICAL-FIX-APPLIED.md)
 - [docker-compose.yml](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/docker-compose.yml)
 - [FAZAONE.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONE.MD)
@@ -340,6 +348,7 @@
 - [FAZAONEC.MD](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FAZAONEC.MD)
 - [FINAL-SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FINAL-SETUP.md)
 - [FIX_DATABASE.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_DATABASE.md)
+- [FIX_IMPORTMAP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_IMPORTMAP.md)
 - [FIX_MIGRATION.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_MIGRATION.md)
 - [FIX_NOW.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_NOW.md)
 - [FIX_REVIEWS_DISPLAY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIX_REVIEWS_DISPLAY.md)
@@ -349,6 +358,8 @@
 - [FIXES_SUMMARY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/FIXES_SUMMARY.md)
 - [HERO_CACHE_FIX.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/HERO_CACHE_FIX.md)
 - [HERO_SETUP.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/HERO_SETUP.md)
+- [IMPLEMENTATION_SUMMARY.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/IMPLEMENTATION_SUMMARY.md)
+- [INTEGRATION_CATEGORIES.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/INTEGRATION_CATEGORIES.md)
 - [ITERATION_0_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_0_CHECKPOINT.md)
 - [ITERATION_1_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_1_CHECKPOINT.md)
 - [ITERATION_2A_CHECKPOINT.md](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/ITERATION_2A_CHECKPOINT.md)
@@ -411,6 +422,7 @@
 - [apps/cms/src/payload-types.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/payload-types.ts)
 - [apps/cms/src/payload.config.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/payload.config.ts)
 - [apps/cms/tests/e2e/frontend.e2e.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/tests/e2e/frontend.e2e.spec.ts)
+- [apps/cms/tests/int/api.categories.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/tests/int/api.categories.spec.ts)
 - [apps/cms/tests/int/api.int.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/tests/int/api.int.spec.ts)
 - [apps/cms/migrate-fix.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/migrate-fix.js)
 - [apps/cms/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/next-env.d.ts)
@@ -423,6 +435,7 @@
 - [apps/web/src/lib/fallback-data.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/lib/fallback-data.ts)
 - [apps/web/next-env.d.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/next-env.d.ts)
 - [apps/web/next.config.js](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/next.config.js)
+- [apps/web/test-request-form.spec.ts](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/test-request-form.spec.ts)
 
 ### 🎨 Frontend
 
@@ -432,6 +445,7 @@
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/not-found.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/admin/[[...segments]]/not-found.tsx)
 - [apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/admin/[[...segments]]/page.tsx)
 - [apps/cms/src/app/(payload)/layout.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/app/(payload)/layout.tsx)
+- [apps/cms/src/components/CategorySelectInfo.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/CategorySelectInfo.tsx)
 - [apps/cms/src/components/ExportCSV.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/ExportCSV.tsx)
 - [apps/cms/src/components/FormFieldRowLabel.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/cms/src/components/FormFieldRowLabel.tsx)
 - [apps/web/src/app/services/[slug]/page.tsx](https://raw.githubusercontent.com/AndreyVoyage/service-center/fix/local-errors/apps/web/src/app/services/[slug]/page.tsx)

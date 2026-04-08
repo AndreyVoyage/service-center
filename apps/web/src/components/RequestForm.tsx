@@ -1,13 +1,12 @@
 // apps/web/src/components/RequestForm.tsx
 'use client';
 
-import { useState, FormEvent } from 'react';
-import { submitForm, ContactFormData } from '@/lib/api';
+import { useState, useEffect, FormEvent } from 'react';
+import { submitForm, ContactFormData, getCategories, Category } from '@/lib/api';
 import styles from './RequestForm.module.css';
 
 interface RequestFormProps {
   preselectedService?: string;
-  equipmentTypes?: string[];
   cmsConfig?: ContactFormData;
 }
 
@@ -24,23 +23,46 @@ const fallbackConfig: ContactFormData = {
   successMessage: 'Спасибо! Мы перезвоним вам в ближайшее время.',
 };
 
-export default function RequestForm({ preselectedService, equipmentTypes = [], cmsConfig }: RequestFormProps) {
+export default function RequestForm({ preselectedService, cmsConfig }: RequestFormProps) {
   // Используем конфигурацию из CMS или fallback
   const config = cmsConfig?.isActive !== false ? (cmsConfig || fallbackConfig) : null;
   
   // Сортируем поля по order
   const sortedFields = config?.fields?.sort((a, b) => (a.order || 0) - (b.order || 0)) || [];
   
+  // Проверяем нужно ли загружать категории
+  const hasCategorySelect = sortedFields.some(field => field.fieldType === 'categorySelect');
+  
+  // Загружаем категории если есть поле categorySelect
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(false);
+  const [categoriesError, setCategoriesError] = useState(false);
+  
+  useEffect(() => {
+    if (hasCategorySelect) {
+      setCategoriesLoading(true);
+      getCategories()
+        .then(res => {
+          setCategories(res.docs);
+          setCategoriesError(false);
+        })
+        .catch(err => {
+          console.error('[RequestForm] Failed to load categories:', err);
+          setCategoriesError(true);
+        })
+        .finally(() => setCategoriesLoading(false));
+    }
+  }, [hasCategorySelect]);
+  
   // Инициализируем formData на основе полей из CMS
   const initialFormData: Record<string, string> = {};
   sortedFields.forEach(field => {
     initialFormData[field.name] = '';
   });
-  // Добавляем service и equipmentType если есть
+  // Добавляем service если есть
   if (preselectedService) {
     initialFormData.service = preselectedService;
   }
-  initialFormData.equipmentType = '';
 
   const [formData, setFormData] = useState(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +80,7 @@ export default function RequestForm({ preselectedService, equipmentTypes = [], c
         phone: formData.phone || '',
         message: formData.message || '',
         service: formData.service || preselectedService || '',
-        equipmentType: formData.equipmentType || '',
+        category: formData.category || '',
       });
       
       setIsSuccess(true);
@@ -70,7 +92,6 @@ export default function RequestForm({ preselectedService, equipmentTypes = [], c
       if (preselectedService) {
         resetData.service = preselectedService;
       }
-      resetData.equipmentType = '';
       setFormData(resetData);
       
       setTimeout(() => setIsSuccess(false), 5000);
@@ -146,6 +167,27 @@ export default function RequestForm({ preselectedService, equipmentTypes = [], c
                   </option>
                 ))}
               </select>
+            ) : field.fieldType === 'categorySelect' ? (
+              <select
+                id={field.name}
+                name={field.name}
+                value={formData[field.name] || ''}
+                onChange={handleChange}
+                required={field.required}
+                className={styles.select}
+                disabled={categoriesLoading || categoriesError}
+              >
+                <option value="">
+                  {categoriesLoading ? 'Загрузка...' : 
+                   categoriesError ? 'Ошибка загрузки' : 
+                   field.placeholder || 'Выберите категорию...'}
+                </option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.slug}>
+                    {category.title}
+                  </option>
+                ))}
+              </select>
             ) : field.fieldType === 'checkbox' ? (
               <label className={styles.checkboxLabel}>
                 <input
@@ -179,27 +221,6 @@ export default function RequestForm({ preselectedService, equipmentTypes = [], c
             )}
           </div>
         ))}
-
-        {/* Оборудование (если переданы equipmentTypes) */}
-        {equipmentTypes.length > 0 && (
-          <div className={styles.field}>
-            <label htmlFor="equipmentType" className={styles.label}>
-              Тип оборудования
-            </label>
-            <select
-              id="equipmentType"
-              name="equipmentType"
-              value={formData.equipmentType || ''}
-              onChange={handleChange}
-              className={styles.select}
-            >
-              <option value="">Выберите тип</option>
-              {equipmentTypes.map((type) => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-          </div>
-        )}
 
         {preselectedService && (
           <input type="hidden" name="service" value={formData.service || preselectedService} />

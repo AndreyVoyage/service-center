@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useFieldArray, useFormFields } from '@payloadcms/ui'
-import type { FieldLabel } from 'payload'
+import { useFormFields } from '@payloadcms/ui'
 
 // Иконки для типов полей
 const fieldTypeIcons: Record<string, string> = {
@@ -10,6 +9,10 @@ const fieldTypeIcons: Record<string, string> = {
   phone: '📞',
   email: '✉️',
   message: '💬',
+  text: '📝',
+  select: '📋',
+  checkbox: '☑️',
+  categorySelect: '📁',
   custom: '🔧',
 }
 
@@ -19,6 +22,10 @@ const fieldTypeLabels: Record<string, string> = {
   phone: 'Телефон',
   email: 'Email',
   message: 'Сообщение',
+  text: 'Текст',
+  select: 'Список (ручной)',
+  checkbox: 'Чекбокс',
+  categorySelect: 'Категории (авто)',
   custom: 'Кастомное',
 }
 
@@ -26,15 +33,13 @@ export const FormFieldRowLabel: React.FC<{ path: string; index: number }> = ({
   path,
   index,
 }) => {
-  const { moveRow, removeRow, totalRows } = useFieldArray()
-  
   // Получаем данные текущей строки
   const rowData = useFormFields(([fields]) => {
     const fieldPath = `${path}.${index}`
     const fieldType = fields[`${fieldPath}.fieldType`]?.value as string
     const label = fields[`${fieldPath}.label`]?.value as string
     const isEnabled = fields[`${fieldPath}.isEnabled`]?.value as boolean
-    
+
     return {
       fieldType: fieldType || 'name',
       label: label || 'Без названия',
@@ -43,22 +48,6 @@ export const FormFieldRowLabel: React.FC<{ path: string; index: number }> = ({
   })
 
   const { fieldType, label, isEnabled } = rowData
-
-  const handleMoveUp = () => {
-    if (index > 0) {
-      moveRow(index, index - 1)
-    }
-  }
-
-  const handleMoveDown = () => {
-    if (index < totalRows - 1) {
-      moveRow(index, index + 1)
-    }
-  }
-
-  const handleRemove = () => {
-    removeRow(index)
-  }
 
   return (
     <div
@@ -93,65 +82,6 @@ export const FormFieldRowLabel: React.FC<{ path: string; index: number }> = ({
           {fieldTypeLabels[fieldType] || fieldType}
           {!isEnabled && ' • Выключено'}
         </div>
-      </div>
-
-      {/* Кнопки управления */}
-      <div style={{ display: 'flex', gap: '4px' }}>
-        {/* Кнопка вверх */}
-        <button
-          type="button"
-          onClick={handleMoveUp}
-          disabled={index === 0}
-          title="Переместить вверх"
-          style={{
-            padding: '4px 8px',
-            border: '1px solid #e2e8f0',
-            borderRadius: '4px',
-            background: index === 0 ? '#f1f5f9' : '#fff',
-            cursor: index === 0 ? 'not-allowed' : 'pointer',
-            opacity: index === 0 ? 0.5 : 1,
-            fontSize: '14px',
-          }}
-        >
-          ↑
-        </button>
-
-        {/* Кнопка вниз */}
-        <button
-          type="button"
-          onClick={handleMoveDown}
-          disabled={index === totalRows - 1}
-          title="Переместить вниз"
-          style={{
-            padding: '4px 8px',
-            border: '1px solid #e2e8f0',
-            borderRadius: '4px',
-            background: index === totalRows - 1 ? '#f1f5f9' : '#fff',
-            cursor: index === totalRows - 1 ? 'not-allowed' : 'pointer',
-            opacity: index === totalRows - 1 ? 0.5 : 1,
-            fontSize: '14px',
-          }}
-        >
-          ↓
-        </button>
-
-        {/* Кнопка удалить */}
-        <button
-          type="button"
-          onClick={handleRemove}
-          title="Удалить поле"
-          style={{
-            padding: '4px 8px',
-            border: '1px solid #ef4444',
-            borderRadius: '4px',
-            background: '#fff',
-            color: '#ef4444',
-            cursor: 'pointer',
-            fontSize: '14px',
-          }}
-        >
-          🗑️
-        </button>
       </div>
     </div>
   )

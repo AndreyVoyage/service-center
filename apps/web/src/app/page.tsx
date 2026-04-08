@@ -116,15 +116,6 @@ export default async function Home() {
   console.log('[HomePage] Reviews loaded:', reviews.length, reviewsData.docs.length > 0 ? '(API)' : '(Fallback/Empty)');
   const hero = heroData || fallbackHero;
 
-  const equipmentTypes = [
-    'Промышленный холодильник',
-    'Морозильная камера',
-    'Холодильная витрина',
-    'Ларь морозильный',
-    'Кондитерский шкаф',
-    'Холодильный агрегат',
-  ];
-
   return (
     <>
       {/* Hero Section */}
@@ -195,10 +186,7 @@ export default async function Home() {
 
       {/* Form Section - Редактируемый через CMS */}
       {contactFormData?.isActive !== false && (
-        <ContactSection 
-          data={contactFormData}
-          equipmentTypes={equipmentTypes}
-        />
+        <ContactSection data={contactFormData} />
       )}
     </>
   );
